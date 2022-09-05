@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Bulbasaur",
+        "desc": "DESC",
+        "price": 400
+    },
+    {
+        "name": "Smartphone",
+        "desc": "DESC",
+        "price": 9000
+    },
+    {
+        "name": "Denim Jeans",
+        "desc": "DESC",
+        "price": 1000
+    },
+    {
+        "name": "Shirt",
+        "desc": "DESC",
+        "price": 550
+    },
+    {
+        "name": "Shoes",
+        "desc": "DESC",
+        "price": 1499
+    },
+    {
+        "name": "Dress",
+        "desc": "DESC",
+        "price": 999
+    },
+    {
+        "name": "Sunglasses",
+        "desc": "DESC",
+        "price": 330
+    },
+    {
+        "name": "Watch",
+        "desc": "DESC",
+        "price": 100
+    },
+    {
+        "name": "Bag",
+        "desc": "DESC",
+        "price": 789
+    },
+    {
+        "name": "Washing Machine",
+        "desc": "DESC",
+        "price": 12000
+    },
+    {
+        "name": "Laptop",
+        "desc": "DESC",
+        "price": 80000
+    },
+    {
+        "name": "Chair",
+        "desc": "DESC",
+        "price": 2100
+    }
+]

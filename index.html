@@ -5,21 +5,95 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
+
+    <style>
+        #addItemForm {
+            display: none;
+            flex-direction: column;
+            width: 50%;
+            
+            justify-content: center;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #d7d7d7;
+        }
+        #addItemForm input, #addItemForm button {
+            margin: 10px 0;
+        }
+
+    </style>
 </head>
 <body>
     <div class="header">
-        <button id="addProduct">
+        <h1>Products</h1>
+        <form id="addItemForm">
+            <input type="text" id="name" placeholder="Product Name" />
+            <input type="text" id="price" placeholder="Product Price" />
+            <textarea name="" id="description" cols="30" rows="5" placeholder="Enter Product Description"></textarea>
+            <button type="submit" id="submit" onclick="addProduct()">Submit</button>
+        </form>
+        <button onclick="addProductDiv()">
             Add Product
         </button>
     </div>
     <ul>
         <li>Product 1 <button id="editBtn">Edit</button></li>
-        <li>Product 2 <button id="editBtn">Edit</button></li>
-        <li>Product 3 <button id="editBtn">Edit</button></li>
-        <li>Product 4 <button id="editBtn">Edit</button></li>
-        <li>Product 5 <button id="editBtn">Edit</button></li>
-        <li>Product 6 <button id="editBtn">Edit</button></li>
-        <li>Product 7 <button id="editBtn">Edit</button></li>
+
     </ul>
+
+    <script>
+        var xhttp = new XMLHttpRequest();
+
+
+    
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var products = JSON.parse(this.responseText);
+                var list = document.querySelector("ul");
+                list.innerHTML = "";
+                for (let i = 0; i < products.length; i++) {
+                    list.innerHTML += "<li>Name: " + products[i].name + ", <br> Price: "  +  products[i].price + ", <br> Description: " + products[i].desc + "<br> <button id='editBtn'>Edit</button></li> <br>";
+                }
+            }
+        };
+        xhttp.open("GET", "products.json", true);
+        xhttp.send();
+        
+
+        function addProductDiv() {
+            var form = document.getElementById("addItemForm");
+            if (form.style.display === "none") {
+                form.style.display = "flex";
+            } else {
+                form.style.display = "none";
+            }
+        }
+
+        function addProduct() {
+            var name = document.querySelector("#name").value;
+            var price = document.querySelector("#price").value;
+            var description = document.querySelector("#description").value;
+            var product = {
+                name: name,
+                price: price,
+                description: description
+            }
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    displayProducts();
+                }
+            };
+            xhttp.open("POST", "products.json", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send(JSON.stringify(product));
+        }
+
+        
+
+        var editBtn = document.querySelector("#editBtn");
+        // editBtn.addEventListener("click", editProduct);
+       
+
+     </script>
 </body>
 </html>
