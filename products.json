@@ -1,4 +1,4 @@
-[
+{"products" : [
     {
         "name": "Bulbasaur",
         "desc": "DESC",
@@ -59,4 +59,6 @@
         "desc": "DESC",
         "price": 2100
     }
-]
+],
+"test": "test"
+}

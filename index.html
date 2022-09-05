@@ -4,21 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+        crossorigin="anonymous"></script>
     <title>Products</title>
 
     <style>
-        #addItemForm {
-            display: none;
+        form{
+            display: flex;
             flex-direction: column;
             width: 50%;
-            
-            justify-content: center;
-            margin: 0 auto;
-            padding: 10px 20px;
-            background-color: #d7d7d7;
-        }
-        #addItemForm input, #addItemForm button {
-            margin: 10px 0;
         }
 
     </style>
@@ -30,69 +24,75 @@
             <input type="text" id="name" placeholder="Product Name" />
             <input type="text" id="price" placeholder="Product Price" />
             <textarea name="" id="description" cols="30" rows="5" placeholder="Enter Product Description"></textarea>
-            <button type="submit" id="submit" onclick="addProduct()">Submit</button>
+            <button type="submit" id="btn">Submit</button>
         </form>
-        <button onclick="addProductDiv()">
+        <!-- <button id="btn">
             Add Product
-        </button>
+        </button> -->
     </div>
     <ul>
-        <li>Product 1 <button id="editBtn">Edit</button></li>
 
     </ul>
 
     <script>
-        var xhttp = new XMLHttpRequest();
 
+        $(document).ready(function () {
+                    // $("ul").load("products.json");
 
-    
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var products = JSON.parse(this.responseText);
-                var list = document.querySelector("ul");
-                list.innerHTML = "";
-                for (let i = 0; i < products.length; i++) {
-                    list.innerHTML += "<li>Name: " + products[i].name + ", <br> Price: "  +  products[i].price + ", <br> Description: " + products[i].desc + "<br> <button id='editBtn'>Edit</button></li> <br>";
-                }
-            }
-        };
-        xhttp.open("GET", "products.json", true);
-        xhttp.send();
+                    $.get("products.json", function (data) {
+                        console.log(data.products);
+                        for (let i = 0; i < data.products.length; i++) {
+                            // console.log(data[i]);
+                            $("ul").append(`<li>${data.products[i].name} <br/> ${data.products[i].price}<br/> ${data.products[i].desc} <br/> <button id="editBtn">Edit</button></li><br/>`);
+                        }
+
+                        
+                        
+
+                        // $.each(data.products, function (key, value) {
+                        //     $("ul").append("<li>Name: " + value.name + ",<br/> Price: " + value.price + ",<br/> Description: " + value.desc + "<br/><button id='editBtn'>Edit</button></li><br/>");
+                        // });
+                        // $.each(data1, function (key, value) {
+                        //     $("ul").append("<li>Key : " + key + " Value: " + JSON.stringify(value) + "</li>");
+                        // });
+                    });
+
+                    $("#btn").click(function (e) {
+                        e.preventDefault();
+                        // let name = $("#name").val();
+                        // let price = $("#price").val();
+                        // let desc = $("#description").val();
+                        let product = {
+                            name: "test",
+                            price: "test",
+                            desc: "test"
+                        };
+                        console.log(product);
+                        var newProduct = JSON.stringify(product);
+                        $.ajax(
+                            console.log("Performing ajax request"),
+                            {
+                                url: "products.json",
+                                type: "POST",
+                                data: newProduct,
+                                contentType: "application/json",
+                                success: function (data) {
+                                    console.log("Success");
+                                    console.log(data);
+                                },
+                                error: function (err) {
+                                    console.log("Error");
+                                    console.log(err);
+                                }
+                        });
+
+                    });
+                    
+        });
+
+            
+
         
-
-        function addProductDiv() {
-            var form = document.getElementById("addItemForm");
-            if (form.style.display === "none") {
-                form.style.display = "flex";
-            } else {
-                form.style.display = "none";
-            }
-        }
-
-        function addProduct() {
-            var name = document.querySelector("#name").value;
-            var price = document.querySelector("#price").value;
-            var description = document.querySelector("#description").value;
-            var product = {
-                name: name,
-                price: price,
-                description: description
-            }
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    displayProducts();
-                }
-            };
-            xhttp.open("POST", "products.json", true);
-            xhttp.setRequestHeader("Content-type", "application/json");
-            xhttp.send(JSON.stringify(product));
-        }
-
-        
-
-        var editBtn = document.querySelector("#editBtn");
-        // editBtn.addEventListener("click", editProduct);
-       
 
      </script>
 </body>
