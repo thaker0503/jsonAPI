@@ -7,9 +7,13 @@
     <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.js"></script> -->
     <title>To Do | Using API</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.css" integrity="sha512-lCk0aEL6CvAGQvaZ47hoq1v/hNsunE8wD4xmmBelkJjg51DauW6uVdaWEJlwgAE6PxcY7/SThs1T4+IMwwpN7w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
     <style>
         /* body{
@@ -91,7 +95,7 @@
     <script>
         const user = "yatharth"
         const url = `https://internapp.vercel.app/${user}/todos/`        
-        getProducts();
+        // getProducts();
 
         // {
         //         "title": "string",
@@ -99,22 +103,21 @@
         //         "completed: true/false
         //     }
 
-            function checkBoxClick(id) {
-                console.log("Function Called")
-                let param = {
-                    completed: true
-                }
-                $.ajax(console.log("ajax started"),
-                    {
-                    url: url + id,
-                    type: 'PUT',
-                    data: param,
-                    function (data) {
-                        console.log(data)
-                    }
-                })
+            
+            
+                
+                //     $.ajax(console.log("ajax started"),
+                //     {
+                //     url: url + id,
+                //     type: 'PUT',
+                //     data: param,
+                //     function (data) {
+                //         console.log(data)
+                //     }
+                // })
+                // window.location.reload();
                    
-            }
+                // }
 
             // create a function to change the completed status of the task when the checkbox is checked
             // function checkBoxClick(id) {
@@ -131,6 +134,11 @@
             //             console.log(data)
             //         }
             //     })
+
+
+
+
+
             
 
 
@@ -138,14 +146,41 @@
 
 
 
+        // function getProducts(){
+            
+        // }
+        
+        function checkBoxClick(id) {
+                console.log("Function Called")
+                console.log(url + id)
+                const final = url + id
+
+                $.ajax({
+                    url: final,
+                    type: 'PUT',
+                    dataType: 'json',
+                    data: {
+                        completed: true
+                    },
+
+                    success: function (response) {
+                        console.log("Success")
+                        console.log(response)
+                        // getProducts()
+                    }
+                });
+            }
 
 
+        $(function(){
+            // $(`<a href='${url}'>Link</a>`).appendTo("#todo")
+            
 
+            
 
-
-        function getProducts(){
             $.get(url, function (data) {
                 $.each(data, function (i, item) {
+                    console.log(item.completed)
                     if(item.completed){
                         $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')" checked/> Title: ${item.title} <br> Description: ${item.description}</li><br>`).appendTo(".completed")
                     }else{
@@ -153,13 +188,6 @@
                     }
                 })
             })
-        }
-        
-
-
-        $(function(){
-            // $(`<a href='${url}'>Link</a>`).appendTo("#todo")
-
 
             $("#addTask").click(function (e) {
                 e.preventDefault();
