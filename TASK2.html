@@ -32,20 +32,6 @@
         }
 
     </style>
-    <script>
-        $(document).ready(function(){
-            $("form").dialog({
-                autoOpen : false
-            });
-            $("#btn").click(function(){
-               $("form").dialog("open"); 
-            })
-            $("#todoList").tabs({
-                active: 1
-            });
-            $("ol").sortable({axis : "y", containment:'#todoList'})
-        })
-    </script>
 </head>
 <body>
     <form >
@@ -95,65 +81,15 @@
     <script>
         const user = "yatharth"
         const url = `https://internapp.vercel.app/${user}/todos/`        
-        // getProducts();
-
-        // {
-        //         "title": "string",
-        //             "description":string",
-        //         "completed: true/false
-        //     }
-
-            
-            
-                
-                //     $.ajax(console.log("ajax started"),
-                //     {
-                //     url: url + id,
-                //     type: 'PUT',
-                //     data: param,
-                //     function (data) {
-                //         console.log(data)
-                //     }
-                // })
-                // window.location.reload();
-                   
-                // }
-
-            // create a function to change the completed status of the task when the checkbox is checked
-            // function checkBoxClick(id) {
-            //     console.log("Function Called")
-            //     let param = {
-            //         completed: true
-            //     }
-            //     $.ajax(console.log("ajax started"),
-            //         {
-            //         url: url + id,
-            //         type: 'PUT',
-            //         data: param,
-            //         function (data) {
-            //             console.log(data)
-            //         }
-            //     })
-
-
-
-
-
-            
-
-
-
-
-
-
-        // function getProducts(){
-            
-        // }
+        
         
         function checkBoxClick(id) {
                 console.log("Function Called")
                 console.log(url + id)
                 const final = url + id
+                let param = {
+                    completed: true
+                }
                 $.ajax({
                     url: final,
                     type: 'PUT',
@@ -170,7 +106,16 @@
 
         $(function(){
             // $(`<a href='${url}'>Link</a>`).appendTo("#todo")
-            
+            $("form").dialog({
+                autoOpen : false
+            });
+            $("#btn").click(function(){
+               $("form").dialog("open"); 
+            })
+            $("#todoList").tabs({
+                active: 1
+            });
+            $("ol").sortable({axis : "y", containment:'#todoList'})
 
             
 
