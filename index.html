@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
     <title>Products</title>
 
     <style>
@@ -14,79 +13,174 @@
             flex-direction: column;
             width: 50%;
         }
+        .tableDesign{
+            border: 2px solid #000;
+            width: 100%;
+            background-color: #2C2C2C;
+            color: #fff;
+        }
+        .tableDesign th{
+            /* border-collapse: collapse; */
+            background-color: #2C2C2C;
+            color: #fff;
+            padding: 10px;
+            /* border: 1px solid #000; */
+        }   
+        .tableDesign tr{
+            /* border: 2px solid #000; */
+            background-color: #fff;
+            color: #000;
+        }
+        .tableDesign tr:nth-child(odd){
+            /* border: 2px solid #000; */
+            background-color: #d7d7d7;
+            color: #000;
+        }
+        .editBtn{
+            padding: 5px;
+            width: 50px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #error{
+            color: red;
+        }
 
     </style>
 </head>
 <body>
     <div class="header">
         <h1>Products</h1>
+        <p id="error">* All fields are mandatory</p>
         <form id="addItemForm">
             <input type="text" id="name" placeholder="Product Name" />
             <input type="text" id="price" placeholder="Product Price" />
             <textarea name="" id="description" cols="30" rows="5" placeholder="Enter Product Description"></textarea>
             <button type="submit" id="btn">Submit</button>
+            <button type="submit" id="edit">Edit</button>
         </form>
         <!-- <button id="btn">
             Add Product
         </button> -->
     </div>
-    <ul>
-
-    </ul>
+    <table class="tableDesign">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Edit</th>
+        </tr>
+    </table>
 
     <script>
+        const url = "http://localhost:3000/products/";
+            
+        
 
+            function editProduct(id) {
+                $.get(url + id, function (data) {
+                    console.log(data);
+                    $("#name").val(data.name);
+                    $("#price").val(data.price);
+                    $("#description").val(data.desc);
+                    $("#btn").hide();
+                    $("#btn").prop('disabled', true) 
+                    $("#edit").show();
+                    $("#edit").attr("data-id", id);
+                });
+                    
+            }
+
+            function edit(){
+                let id = $(this).attr("data-id");
+                let product = {
+                    name: $("#name").val(),
+                    price: $("#price").val(),
+                    desc: $("#description").val()
+                }
+                
+                $.ajax({
+                    url: url + id,
+                    type: 'PUT',
+                    data: product,
+                    function () {
+                        console.log(product);
+                        $("#btn").show();
+                        $("#edit").hide();
+                        $("#name").val("");
+                        $("#price").val("");
+                        $("#description").val("");
+                        getProducts();
+                }
+                });
+            }
         $(document).ready(function () {
+            getProducts()
+                    $("#edit").hide();
+                    $("#error").hide();
                     // $("ul").load("products.json");
+                    function getProducts(){
+                        $.get(url, function (data) {
+                            $.each(data, function (i, item) {
+                                var name = "Yatharth"
+                                if(item.name.toLowerCase().indexOf((name.toLowerCase())) != -1  ){
+                                    $("table").append(`<tr> <td>${item.name}</td><td>${item.price}</td><td>${item.desc}</td><td><button id="editBtn" class="editBtn" onclick="editProduct(${item.id})">Edit</button></td></tr>`);
+                                }
+                                // $("table").append(`<tr> <td>${item.name}</td><td>${item.price}</td><td>${item.desc}</td><td><button id="editBtn" class="editBtn" onclick="editProduct(${item.id})">Edit</button></td></tr>`);
 
-                    $.get("products.json", function (data) {
-                        console.log(data.products);
-                        for (let i = 0; i < data.products.length; i++) {
-                            // console.log(data[i]);
-                            $("ul").append(`<li>${data.products[i].name} <br/> ${data.products[i].price}<br/> ${data.products[i].desc} <br/> <button id="editBtn">Edit</button></li><br/>`);
+                            });
+                        });
+                    }
+
+                    $("#addItemForm").children().on("input", function () {
+                        if ($("#name").val() == "" || $("#price").val() == "" || $("#description").val() == "") {
+                            $("#btn").prop('disabled', true);
+                            $("#error").show();
+                        } else {
+                            $("#btn").prop('disabled', false);
+                            $("#error").hide();
                         }
-
-                        
-                        
-
-                        // $.each(data.products, function (key, value) {
-                        //     $("ul").append("<li>Name: " + value.name + ",<br/> Price: " + value.price + ",<br/> Description: " + value.desc + "<br/><button id='editBtn'>Edit</button></li><br/>");
-                        // });
-                        // $.each(data1, function (key, value) {
-                        //     $("ul").append("<li>Key : " + key + " Value: " + JSON.stringify(value) + "</li>");
-                        // });
                     });
+                    
+                    
 
                     $("#btn").click(function (e) {
                         e.preventDefault();
-                        // let name = $("#name").val();
-                        // let price = $("#price").val();
-                        // let desc = $("#description").val();
                         let product = {
-                            name: "test",
-                            price: "test",
-                            desc: "test"
+                            id: randomId(),
+                            name: $("#name").val(),
+                            price: $("#price").val(),
+                            desc: $("#description").val()
                         };
-                        console.log(product);
+                        // console.log(product);
                         var newProduct = JSON.stringify(product);
-                        $.ajax(
-                            console.log("Performing ajax request"),
-                            {
-                                url: "products.json",
+                        if(product.name != "" && product.price != "" && product.desc != ""){
+                            $.ajax({
+                                url: url,
                                 type: "POST",
                                 data: newProduct,
                                 contentType: "application/json",
                                 success: function (data) {
-                                    console.log("Success");
                                     console.log(data);
-                                },
-                                error: function (err) {
-                                    console.log("Error");
-                                    console.log(err);
+                                    // $("ul").append(`<li>Name: ${data.name},<br/>Price: ${data.price},<br/>Description: ${data.desc}<br/><button>Edit</button></li><br/>`);
                                 }
-                        });
+                            });
+                            getProducts();
+                        }else{
+                            $("#error").show();
+                        }
 
+                    }).css("cursor", "pointer");
+                    function randomId() {
+                        return Math.floor(Math.random() * 10000);
+                    }
+                    $("#edit").click(edit).css("cursor", "pointer");
+                    $("#txtSearchProdAssign").keydown(function (e) {
+                        if (e.keyCode == 13) {
+                            e.preventDefault();
+                        }
                     });
+                    
                     
         });
 

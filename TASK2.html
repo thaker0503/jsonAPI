@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.js"></script> -->
+    <title>To Do | Using API</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <style>
+        /* body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 500px;
+        }
+        #container{
+            width: 50%;
+        } */
+        
+        .todo-item{
+            list-style-type: none;
+        }
+
+    </style>
+    <script>
+        $(document).ready(function(){
+            $("form").dialog({
+                autoOpen : false
+            });
+            $("#btn").click(function(){
+               $("form").dialog("open"); 
+            })
+            $("#todoList").tabs({
+                active: 1
+            });
+            $("ol").sortable({axis : "y", containment:'#todoList'})
+        })
+    </script>
+</head>
+<body>
+    <form >
+        <h3>Add New Task</h3>
+        <input type="text" placeholder="Enter Task Title" id="title">
+        <input type="text" placeholder="Enter Task description" id="description">
+        <!-- <input type="text" placeholder="Enter Time to be completed" id="endTime"> -->
+        <button id="addTask">Add Task</button>
+    </form>
+    <button id="btn">Add New Task</button>
+    <div id="container">
+        <h2>Todo List</h2>
+        <!-- <div id="todoList">
+            <ul id="todo">
+                <li><a href="#yesterday">Yesterday</a></li>
+                <li><a href="#today">Today</a></li>
+                <li><a href="#tomorrow">Tomorrow</a></li>
+            </ul>
+            <ol id="yesterday">
+                <li><input type="checkbox">Task 1</li>
+                <li><input type="checkbox">Task 2</li>
+            </ol>
+            <ol id="today">
+                <li><input type="checkbox">Task 3</li>
+                <li><input type="checkbox">Task 4</li>
+            </ol>
+            <ol id="tomorrow">
+                <li><input type="checkbox">Task 5</li>
+                <li><input type="checkbox">Task 6</li>
+            </ol>
+        </div> -->
+        <ul id="todos">
+            <div class="pending">
+                <h1>Pending Tasks</h1>
+            </div>
+            <div class="completed">
+                <h1>Completed Tasks</h1>
+            </div>
+        </ul>
+    </div>
+
+    <!-- <button onclick="notifyMe()">Notify me!</button> -->
+
+
+
+
+    <script>
+        const user = "yatharth"
+        const url = `https://internapp.vercel.app/${user}/todos/`        
+        getProducts();
+
+        // {
+        //         "title": "string",
+        //             "description":string",
+        //         "completed: true/false
+        //     }
+
+            function checkBoxClick(id) {
+                console.log("Function Called")
+                let param = {
+                    completed: true
+                }
+                $.ajax(console.log("ajax started"),
+                    {
+                    url: url + id,
+                    type: 'PUT',
+                    data: param,
+                    function (data) {
+                        console.log(data)
+                    }
+                })
+                   
+            }
+
+
+
+
+
+
+
+
+
+
+
+        function getProducts(){
+            $.get(url, function (data) {
+                $.each(data, function (i, item) {
+                    if(item.completed){
+                        $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')" checked/> Title: ${item.title} <br> Description: ${item.description}</li><br>`).appendTo(".completed")
+                    }else{
+                        $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> Title: ${item.title} <br> Description: ${item.description}</li><br>`).appendTo(".pending")
+                    }
+                })
+            })
+        }
+        
+
+
+        $(function(){
+            // $(`<a href='${url}'>Link</a>`).appendTo("#todo")
+
+
+            $("#addTask").click(function (e) {
+                e.preventDefault();
+                let product = {
+                    title: $("#title").val(),
+                    description: $("#description").val(),
+                    completed: false
+                };
+                console.log(product);
+                var newProduct = JSON.stringify(product);
+                if (product.title != "" && product.description != "") {
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: newProduct,
+                        contentType: "application/json",
+                        success: function (data) {
+                            console.log(data);
+                            $("form").dialog("close"); 
+                            // $("ul").append(`<li>Name: ${data.name},<br/>Price: ${data.price},<br/>Description: ${data.desc}<br/><button>Edit</button></li><br/>`);
+                        }
+                    });
+                } else {
+                    alert("Enter Values")
+                }
+            })
+
+            
+            // $("input[type=checkbox]").prop(":checked",function(){
+
+            // })
+            
+        })
+
+        
+
+
+
+
+
+
+
+
+
+
+        // function notifyMe() {
+        //         if (!("Notification" in window)) {
+        //             alert("This browser does not support desktop notification");
+        //         } else if (Notification.permission !== "denied") {
+        //             Notification.requestPermission().then((permission) => {
+        //                 if (permission === "granted") {
+        //                     const notification = new Notification("Hi there!");
+        //                 }
+        //             });
+        //         }
+        //     }
+
+    </script>
+</body>
+</html>
