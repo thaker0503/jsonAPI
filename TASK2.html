@@ -100,6 +100,20 @@
                     }
                 })
             }
+        
+            function del(id){
+                console.log("Function Called")
+                console.log(url + id)
+                const final = url + id
+                $.ajax({
+                    url: final,
+                    type: 'DELETE',
+                    success: function (data) {
+                        console.log(data)
+                        window.location.reload();
+                    }
+                })
+            }
             
             
 
@@ -123,12 +137,14 @@
                 $.each(data, function (i, item) {
                     console.log(item.completed)
                     if(item.completed){
-                        $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')" checked/> Title: ${item.title} <br> Description: ${item.description}</li><br>`).appendTo(".completed")
+                        $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')" checked/> Title: ${item.title} <br> Description: ${item.description}<br><button id="${item.id}">Delete</button></li><br>`).appendTo(".completed")
                     }else{
-                        $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> Title: ${item.title} <br> Description: ${item.description}</li><br>`).appendTo(".pending")
+                        $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> Title: ${item.title} <br> Description: ${item.description}<br><button id="${item.id}" onclick="del('${item.id}')"">Delete</button></li><br>`).appendTo(".pending")
                     }
                 })
             })
+
+            
 
             $("#addTask").click(function (e) {
                 e.preventDefault();

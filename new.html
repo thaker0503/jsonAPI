@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <form >
+        <h3>Add New Task</h3>
+        <input type="text" placeholder="Enter Task Title" id="title">
+        <input type="text" placeholder="Enter Task description" id="description">
+        <!-- <input type="text" placeholder="Enter Time to be completed" id="endTime"> -->
+        <button id="addTask">Add Task</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        $(document).ready(function(){
+            const user = "yatharth"
+            const url = `https://internapp.vercel.app/${user}/todos/`
+
+            // get the data from the api and display it inside the result div
+            $.get(url, function(data, status){
+                console.log(data)
+                console.log(status)
+                data.forEach(element => {
+                    $("#result").append(`
+                        <div class="task">
+                            <h3>${element.title}</h3>
+                            <p>${element.description}</p>
+                            <p>${element.completed}</p>
+                            <button class="edit" id="${element.id}">Edit</button>
+                        </div>
+                    `)
+                });
+            });
+
+            // on click edit button change the value of the element.completed to true in the api
+            $(document).on("click", ".edit", function(){
+                const id = $(this).attr("id")
+                const url = `https://internapp.vercel.app/${user}/todos/${id}`
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    data: {
+                        completed: true
+                    },
+                    success: function(result) {
+                        console.log(result)
+                    }
+                });
+            })
+
+
+        })
+    </script>
+</body>
+</html>
