@@ -154,22 +154,18 @@
                 console.log("Function Called")
                 console.log(url + id)
                 const final = url + id
-
                 $.ajax({
                     url: final,
                     type: 'PUT',
-                    dataType: 'json',
-                    data: {
-                        completed: true
-                    },
-
-                    success: function (response) {
-                        console.log("Success")
-                        console.log(response)
-                        // getProducts()
+                    data: param,
+                    success: function (data) {
+                        console.log(data)
+                        // window.location.reload();
                     }
-                });
+                })
             }
+            
+            
 
 
         $(function(){
