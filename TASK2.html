@@ -126,9 +126,11 @@
         <ul id="todos">
             <div class="pending">
                 <h2>Pending Tasks</h2>
+                <div class="pendingtask"></div>
             </div>
             <div class="completed">
                 <h2>Completed Tasks</h2>
+                <div class="completedtask"></div>
             </div>
         </ul>
 
@@ -237,6 +239,7 @@
                     // console.log(param.id)
                     console.log(data.completed)
                     data.completed ? falseValue(final) : trueValue(final)
+                    // getList();
                 }
             })
             // var params = {
@@ -250,25 +253,29 @@
 
 
 
-        function del(id) {
-            console.log("Function Called")
-            console.log(url + id)
-            const final = url + id
-            $.ajax({
-                url: final,
-                type: 'DELETE',
-                success: function (data) {
-                    console.log(data)
-                    // window.location.reload();
-                }
-            })
-        }
+        
 
 
 
 
-        $(function () {
+        
             $(".error").hide()
+            function del(id) {
+                console.log("Function Called")
+                console.log(url + id)
+                const final = url + id
+                $.ajax({
+                    url: final,
+                    type: 'DELETE',
+                    success: function (data) {
+                        console.log(data)
+                        $(".pendingtask")
+                        $(".completedtask")
+                        getList();
+                        // window.location.reload();
+                    }
+                })
+            }
             
             // $(`<a href='${url}'>Link</a>`).appendTo("#todo")
 
@@ -283,9 +290,10 @@
                 buttonText: "Select date"
             });
 
+            
 
             getList();
-
+            
 
 
             function getList() {
@@ -323,7 +331,8 @@
                             console.log(item.completed)
                             if (item.completed) {
                                 // $("<p>No tasks pending...</p>").appendTo(".pending")
-                                $(card1).appendTo(".completed")
+                                // $(".completedtask").empty()
+                                $(card1).appendTo(".completedtask")
                                 // $(".desc").hide()
                                 // $(".div2").click(function(){
                                 //     $(this).siblings().toggle("slow")
@@ -331,7 +340,8 @@
                             } else {
                                 // $("<p>Complete your pending tasks</p>").appendTo(".completed")
                                 // $(".pending").append(`<li><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> <p>Title: ${item.title} <br> Description: ${item.description}</p></li>`)
-                                $(".pending").append(card)
+                                // $(".pendingtask").empty()
+                                $(".pendingtask").append(card)
                                 // $(".desc").hide()
                                 $(".div1").click(function () {
                                     // $(this).siblings().toggle("slow")
@@ -341,6 +351,8 @@
                     }
                 })
             }
+
+            
 
 
 
@@ -361,9 +373,9 @@
                         contentType: "application/json",
                         success: function (data) {
                             console.log(data);
-                            $("form").dialog("close");
-                            $(".pending").html = ''
-                            $(".completed").html = ''
+                            // $("form").dialog("close");
+                            $(".pendingtask").empty()
+                            $(".completedtask").empty()
                             getList();
                             // window.location.reload()
                             // $("ul").append(`<li>Name: ${data.name},<br/>Price: ${data.price},<br/>Description: ${data.desc}<br/><button>Edit</button></li><br/>`);
@@ -384,7 +396,7 @@
 
             // })
 
-        })
+        
 
 
 
