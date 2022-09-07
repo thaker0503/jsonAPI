@@ -101,7 +101,7 @@
                             function (data) {
                                 console.log("Success")
                                 console.log(data)
-                                window.location.reload()
+                                // window.location.reload()
                             }
                     })
         }
@@ -119,7 +119,7 @@
                     function (data) {
                         console.log("Success")
                         console.log(data)
-                        window.location.reload()
+                        // window.location.reload()
                     }
 
 
@@ -164,7 +164,7 @@
                     type: 'DELETE',
                     success: function (data) {
                         console.log(data)
-                        window.location.reload();
+                        // window.location.reload();
                     }
                 })
             }
@@ -196,25 +196,28 @@
             });
             $("ol").sortable({axis : "y", containment:'#todoList'})
 
-            
+            getList();
 
-            $.get(url, function (data) {
-                if(data == '' || data == null){
-                    $("<p>Add new task...</p>").appendTo(".pending")
-                    $("<p>Add new task...</p>").appendTo(".completed")
-                }else{
-                    $.each(data, function (i, item) {
-                        console.log(item.completed)
-                        if (item.completed) {
-                            $("<p>No tasks pending...</p>").appendTo(".pending")
-                            $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')" checked/> Title: ${item.title} <br> Description: ${item.description}<br><button id="${item.id}" onclick="del('${item.id}')"">Delete</button></li><br>`).appendTo(".completed")
-                        } else {
-                            $("<p>Complete your pending tasks</p>").appendTo(".completed")
-                            $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> Title: ${item.title} <br> Description: ${item.description}<br><button id="${item.id}" onclick="del('${item.id}')"">Delete</button></li><br>`).appendTo(".pending")
-                        }
-                    })
-                }
-            })
+            function getList(){
+                
+                $.get(url, function (data) {
+                    if (data == '' || data == null) {
+                        $("<p>Add new task...</p>").appendTo(".pending")
+                        $("<p>Add new task...</p>").appendTo(".completed")
+                    } else {
+                        $.each(data, function (i, item) {
+                            console.log(item.completed)
+                            if (item.completed) {
+                                // $("<p>No tasks pending...</p>").appendTo(".pending")
+                                $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')" checked/> Title: ${item.title} <br> Description: ${item.description}<br><button id="${item.id}" onclick="del('${item.id}')"">Delete</button></li><br>`).appendTo(".completed")
+                            } else {
+                                // $("<p>Complete your pending tasks</p>").appendTo(".completed")
+                                $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> Title: ${item.title} <br> Description: ${item.description}<br><button id="${item.id}" onclick="del('${item.id}')"">Delete</button></li><br>`).appendTo(".pending")
+                            }
+                        })
+                    }
+                })
+            }
 
             
 
@@ -236,7 +239,10 @@
                         success: function (data) {
                             console.log(data);
                             $("form").dialog("close"); 
-                            window.location.reload()
+                            $(".pending").html = ''
+                            $(".completed").html = ''
+                            getList();
+                            // window.location.reload()
                             // $("ul").append(`<li>Name: ${data.name},<br/>Price: ${data.price},<br/>Description: ${data.desc}<br/><button>Edit</button></li><br/>`);
                         }
                     });
