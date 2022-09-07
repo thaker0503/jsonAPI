@@ -30,12 +30,18 @@
         .todo-item{
             list-style-type: none;
         }
+        .error{
+            color: red;
+            position: absolute;
+            top: 4px;
+        
+        }
 
     </style>
 </head>
 <body>
     <form >
-        <h3>Add New Task</h3>
+        <div class="error">* All values are mandatory</div>
         <input type="text" placeholder="Enter Task Title" id="title">
         <input type="text" placeholder="Enter Task description" id="description">
         <!-- <input type="text" placeholder="Enter Time to be completed" id="endTime"> -->
@@ -80,26 +86,74 @@
 
     <script>
         const user = "yatharth"
-        const url = `https://internapp.vercel.app/${user}/todos/`        
+        const url = `https://internapp.vercel.app/${user}/todos/`  
+        
+        function trueValue(final){
+            console.log("True Value")
+            $.ajax({
+                        url: final,
+                        type: 'PUT',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            completed: true
+                        }),
+                        success:
+                            function (data) {
+                                console.log("Success")
+                                console.log(data)
+                                window.location.reload()
+                            }
+                    })
+        }
+
+        function falseValue(final){
+            console.log("False" )
+            $.ajax({
+                url: final,
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    completed: false
+                }),
+                success:
+                    function (data) {
+                        console.log("Success")
+                        console.log(data)
+                        window.location.reload()
+                    }
+
+
+            })
+        }
         
         
         function checkBoxClick(id) {
-                console.log("Function Called")
-                console.log(url + id)
+                // console.log("Function Called")
+                // console.log(url + id)
                 const final = url + id
-                let param = {
-                    completed: true
-                }
-                $.ajax({
-                    url: final,
-                    type: 'PUT',
-                    data: param,
-                    success: function (data) {
+                var param
+                $.get({
+                    url : url + id,
+                    success: function(data){
                         console.log(data)
-                        // window.location.reload();
+                        // param = data
+                        // console.log(param.title)
+                        // console.log(param.description)
+                        // console.log(param.id)
+                        console.log(data.completed)
+                        data.completed ? falseValue(final) : trueValue(final)
                     }
                 })
-            }
+                // var params = {
+                    
+                // }
+                // if(!param.completed){
+                        
+                // }else{
+                    
+                }
+                
+            
         
             function del(id){
                 console.log("Function Called")
@@ -119,10 +173,21 @@
 
 
         $(function(){
+            $(".error").hide()
             // $(`<a href='${url}'>Link</a>`).appendTo("#todo")
-            $("form").dialog({
-                autoOpen : false
-            });
+            $("form").css({
+                display : "flex",
+                flexDirection : "column",
+                justifyContent : "space-evenly",
+                fontSize : "24px",
+                alignItems : "center",
+                // padding : "10px 20px"
+            }).dialog({
+                autoOpen : false,
+                 title: "Add Task",
+                 width : '380' ,
+                 height : '280'
+            })
             $("#btn").click(function(){
                $("form").dialog("open"); 
             })
@@ -164,12 +229,18 @@
                         success: function (data) {
                             console.log(data);
                             $("form").dialog("close"); 
+                            window.location.reload()
                             // $("ul").append(`<li>Name: ${data.name},<br/>Price: ${data.price},<br/>Description: ${data.desc}<br/><button>Edit</button></li><br/>`);
                         }
                     });
                 } else {
-                    alert("Enter Values")
+                    // alert("Enter Values")
+                    $(".error").show("slow")
                 }
+            }).css({
+                width : '50%',
+                cursor : 'pointer'
+
             })
 
             

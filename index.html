@@ -80,7 +80,7 @@
             function editProduct(id) {
                 $.get(url + id, function (data) {
                     console.log(data);
-                    $("#name").val(data.name);
+                    $("#name").val(data.name.split('(')[0]);
                     $("#price").val(data.price);
                     $("#description").val(data.desc);
                     $("#btn").hide();
@@ -123,10 +123,10 @@
                         $.get(url, function (data) {
                             $.each(data, function (i, item) {
                                 var name = "Yatharth"
-                                if(item.name.toLowerCase().indexOf((name.toLowerCase())) != -1  ){
-                                    $("table").append(`<tr> <td>${item.name}</td><td>${item.price}</td><td>${item.desc}</td><td><button id="editBtn" class="editBtn" onclick="editProduct(${item.id})">Edit</button></td></tr>`);
-                                }
-                                // $("table").append(`<tr> <td>${item.name}</td><td>${item.price}</td><td>${item.desc}</td><td><button id="editBtn" class="editBtn" onclick="editProduct(${item.id})">Edit</button></td></tr>`);
+                                // if(item.name.toLowerCase().indexOf((name.toLowerCase())) != -1  ){
+                                //     $("table").append(`<tr> <td>${item.name}</td><td>${item.price}</td><td>${item.desc}</td><td><button id="editBtn" class="editBtn" onclick="editProduct(${item.id})">Edit</button></td></tr>`);
+                                // }
+                                $("table").append(`<tr> <td>${item.name}</td><td>${item.price}</td><td>${item.desc}</td><td><button id="editBtn" class="editBtn" onclick="editProduct(${item.id})">Edit</button></td></tr>`);
 
                             });
                         });
@@ -148,7 +148,7 @@
                         e.preventDefault();
                         let product = {
                             id: randomId(),
-                            name: $("#name").val(),
+                            name: $("#name").val() + "(Yatharth)",
                             price: $("#price").val(),
                             desc: $("#description").val()
                         };

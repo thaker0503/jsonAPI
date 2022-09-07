@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,146 +9,35 @@
 
     <title>Practice</title>
 </head>
+
 <body>
     <h1>Hello World</h1>
+    <button id="btn">Change</button>
     <script>
-        $(document).ready(function(){
-            var myObject = {
-                "products": [
-                    {
-                        "id": "1",
-                        "name": "Watch",
-                        "price": "499",
-                        "desc": " Lorem ipsum dolor sit "
-                    },
-                    {
-                        "id": "2",
-                        "name": "Smartphone",
-                        "price": "8999",
-                        "desc": " Lorem ipsum dolor sit "
-                    },
-                    {
-                        "id": "3",
-                        "name": "Denim Jeans",
-                        "desc": " Lorem ipsum dolor sit ",
-                        "price": 1000
-                    },
-                    {
-                        "id": "4",
-                        "name": "Shirt",
-                        "desc": " Lorem ipsum dolor sit ",
-                        "price": 550
-                    },
-                    {
-                        "id": "5",
-                        "name": "Shoes",
-                        "desc": " Lorem ipsum dolor sit ",
-                        "price": 1499
-                    },
-                    {
-                        "id": "6",
-                        "name": "Dress",
-                        "desc": " Lorem ipsum dolor sit ",
-                        "price": 999
-                    },
-                    {
-                        "id": "7",
-                        "name": "Sunglasses",
-                        "desc": " Lorem ipsum dolor sit ",
-                        "price": 330
-                    },
-                    {
-                        "id": "8",
-                        "name": "Watch",
-                        "desc": " Lorem ipsum dolor sit ",
-                        "price": 100
-                    },
-                    {
-                        "id": "9",
-                        "name": "Bag",
-                        "desc": " Lorem ipsum dolor sit ",
-                        "price": 789
-                    },
-                    {
-                        "id": "10",
-                        "name": "Washing Machine",
-                        "desc": " Lorem ipsum dolor sit ",
-                        "price": 12000
-                    },
-                    {
-                        "id": "11",
-                        "name": "Laptop",
-                        "desc": " Lorem ipsum dolor sit ",
-                        "price": 80000
-                    },
-                    {
-                        "id": "12",
-                        "name": "Chair",
-                        "desc": " Lorem ipsum dolor sit ",
-                        "price": 2100
-                    },
-                    {
-                        "id": 6362,
-                        "name": "Bat",
-                        "price": "100",
-                        "desc": "Good Bat for playing"
-                    },
-                    {
-                        "id": 5238,
-                        "name": "Ball",
-                        "price": "100",
-                        "desc": "Great ball\n"
-                    },
-                    {
-                        "id": 3020,
-                        "name": "Ball",
-                        "price": "100",
-                        "desc": "Great ball\n"
-                    },
-                    {
-                        "id": 1203,
-                        "name": "Test Product ",
-                        "price": "1000",
-                        "desc": "Best product "
-                    },
-                    {
-                        "id": 2160,
-                        "name": "Test Product Yatharth ",
-                        "price": "1000",
-                        "desc": "oisau rpasrg hsraiopgh psoigj oisr h"
-                    },
-                    {
-                        "id": 3095,
-                        "name": "Test Product yatharth",
-                        "price": "20000",
-                        "desc": "liusr ylirioueroseiohporu yporshgilurs ygpas hdpoiuh apou "
-                    },
-                    {
-                        "id": 7647,
-                        "name": "Cricket Bat",
-                        "price": "1500",
-                        "desc": "g is rhj'hs e;io h"
-                    }
-                ]
-            }
-            // var recursiveEncoded = $.param(myObject);
-            // var recursiveDecoded = decodeURIComponent($.param(myObject));
+        $(document).ready(function () {
+            const url = 'https://internapp.vercel.app/yatharth/todos/'
+            const id = '842e5fde-24b8-4047-8c72-4163f389f70d'
+            const final = url + id
 
-            // alert(recursiveEncoded);
-            // alert(recursiveDecoded);
+            $("#btn").click(function () {
+                $.ajax({
+                    url: final,
+                    type: 'PUT',
+                    contentType : 'application/json',
+                    data: JSON.stringify({
+                        completed: true
+                    }),
+                    success:
+                        function (data) {
+                            console.log("Success")
+                            console.log(data)
+                        }
 
-            // var shallowEncoded = $.param(myObject, true);
-            // var shallowDecoded = decodeURIComponent(shallowEncoded);
-
-            // $("body").append(`<p>${shallowEncoded}</p>`);
-            // $("body").append(`<p>${shallowDecoded}</p>`);
-
-            var param = jQuery.param(myObject)
-            $("body").html(
-                `<p>${param}</p>`
-            )
+                })
+            })
         })
     </script>
-    
+
 </body>
+
 </html>
