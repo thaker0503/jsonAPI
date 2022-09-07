@@ -13,10 +13,11 @@
 <body>
     <h1>Hello World</h1>
     <button id="btn">Change</button>
+
     <script>
         $(document).ready(function () {
             const url = 'https://internapp.vercel.app/yatharth/todos/'
-            const id = '842e5fde-24b8-4047-8c72-4163f389f70d'
+            const id = 'dc09598c-38cf-4a9a-89cf-9ea38ad98b55'
             const final = url + id
 
             $("#btn").click(function () {
@@ -25,7 +26,8 @@
                     type: 'PUT',
                     contentType : 'application/json',
                     data: JSON.stringify({
-                        completed: true
+                        title : "Title Changed",
+                        completed: false
                     }),
                     success:
                         function (data) {
@@ -35,6 +37,32 @@
 
                 })
             })
+
+            getList()
+
+            function getList() {
+
+                $.get(url, function (data) {
+                        $.each(data, function (i, item) {
+                            const card = `<div class='list' > 
+        
+                                        <input type="checkbox"  onclick="checkBoxClick('${item.id}')" id="checkBox"/> 
+                                        <span class="todo-description"> 
+                                            <span class="title">${item.title}</span> 
+                                            <span class="desc">${item.description}</span> 
+                                            
+                                        </span>
+                                        <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')""><i  class="fa-solid fa-trash-can close"></i></button>
+                                    `
+                            
+                                // $("<p>Complete your pending tasks</p>").appendTo(".completed")
+                                // $(".pending").append(`<li><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> <p>Title: ${item.title} <br> Description: ${item.description}</p></li>`)
+                                $("body").append(card)
+                            
+                        })
+                    
+                })
+            }
         })
     </script>
 

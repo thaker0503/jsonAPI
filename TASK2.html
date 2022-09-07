@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,74 +11,168 @@
     <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
+        integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.css" integrity="sha512-lCk0aEL6CvAGQvaZ47hoq1v/hNsunE8wD4xmmBelkJjg51DauW6uVdaWEJlwgAE6PxcY7/SThs1T4+IMwwpN7w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.css"
+        integrity="sha512-lCk0aEL6CvAGQvaZ47hoq1v/hNsunE8wD4xmmBelkJjg51DauW6uVdaWEJlwgAE6PxcY7/SThs1T4+IMwwpN7w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"
+        integrity="sha512-HHsOC+h3najWR7OKiGZtfhFIEzg5VRIPde0kB0bG2QRidTQqf+sbfcxCTB16AcFB93xMjnBIKE29/MjdzXE+qw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        /* body{
+        body{
+            background-color: floralwhite;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        form{
+            width: 100%;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 500px;
-        }
-        #container{
-            width: 50%;
-        } */
-        
-        .todo-item{
-            list-style-type: none;
-        }
-        .error{
-            color: red;
-            position: absolute;
-            top: 4px;
-        
-        }
 
+            justify-content: space-between;
+        }
+        .input-fields{
+            display: flex;
+            width: 50%;
+            justify-content: space-between;
+        }
+        .input-fields input{
+            width: 80%;
+            margin-right: 20px;
+            padding: 10px;
+            border: 1px solid;
+            background-color: #2C78D7;
+            color: white;
+            font-size: 14px;
+            border-radius: 4px;
+            outline: none;
+
+        }
+        input::placeholder{
+            color: white;
+            font-size:14px;
+        }
+     
+        #addTask{
+        padding: 6px;
+        width:10% !important;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+        color: rgb(255, 255, 255);
+        background: #2D6EFD;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+    }
+    .div1, .div2{
+        width: 80%;
+        background-color: #d7d7d799;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin-top: 20px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid;
+        /* color: #fff; */
+    }
+    .div1 div, .div2 div{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .title{
+        font-weight: bold;
+        font-size: 18px;
+    }
+    .deleteBtn{
+        width: 50px;
+        height: fit-content;
+        padding: 4px;
+        cursor: pointer;
+        color: white;
+        background-color: rgba(6, 6, 6, 0.865);
+        border: none;
+        outline: none;
+        border-radius: 4px;
+
+
+
+
+    }
+
+        
     </style>
 </head>
+
 <body>
-    <form >
-        <div class="error">* All values are mandatory</div>
-        <input type="text" placeholder="Enter Task Title" id="title">
-        <input type="text" placeholder="Enter Task description" id="description">
-        <!-- <input type="text" placeholder="Enter Time to be completed" id="endTime"> -->
-        <button id="addTask">Add Task</button>
-    </form>
-    <button id="btn">Add New Task</button>
+    <h1>Todo List</h1>
+    <div class="leftDiv">
+        <form>
+            <div class="error">* All values are mandatory</div>
+            <div class="input-fields">
+                <input type="text" placeholder="Add task" id="title">
+                <input type="text" placeholder="Add task description" id="description">
+            </div>
+            <!-- <p>Date: <input type="text" id="datepicker"></p> -->
+            <!-- <input type="text" placeholder="Enter Time to be completed" id="endTime"> -->
+            <button id="addTask">Add Task</button>
+        </form>
+    </div>
     <div id="container">
-        <h2>Todo List</h2>
-        <!-- <div id="todoList">
-            <ul id="todo">
-                <li><a href="#yesterday">Yesterday</a></li>
-                <li><a href="#today">Today</a></li>
-                <li><a href="#tomorrow">Tomorrow</a></li>
-            </ul>
-            <ol id="yesterday">
-                <li><input type="checkbox">Task 1</li>
-                <li><input type="checkbox">Task 2</li>
-            </ol>
-            <ol id="today">
-                <li><input type="checkbox">Task 3</li>
-                <li><input type="checkbox">Task 4</li>
-            </ol>
-            <ol id="tomorrow">
-                <li><input type="checkbox">Task 5</li>
-                <li><input type="checkbox">Task 6</li>
-            </ol>
-        </div> -->
         <ul id="todos">
             <div class="pending">
-                <h1>Pending Tasks</h1>
+                <h2>Pending Tasks</h2>
             </div>
             <div class="completed">
-                <h1>Completed Tasks</h1>
+                <h2>Completed Tasks</h2>
             </div>
         </ul>
+
+        <!-- <div id="todoList">
+                    <ul id="todo">
+                        <li><a href="#yesterday">Yesterday</a></li>
+                        <li><a href="#today">Today</a></li>
+                        <li><a href="#tomorrow">Tomorrow</a></li>
+                    </ul>
+                    <ol id="yesterday">
+                        <ul id="todos">
+                            <div class="pending">
+                                <h2>Pending Tasks</h2>
+                            </div>
+                            <div class="completed">
+                                <h2>Completed Tasks</h2>
+                            </div>
+                        </ul>
+                    </ol>
+                    <ol id="today">
+                        <ul id="todos">
+                            <div class="pending">
+                                <h2>Pending Tasks</h2>
+                            </div>
+                            <div class="completed">
+                                <h2>Completed Tasks</h2>
+                            </div>
+                        </ul>
+                    </ol>
+                    <ol id="tomorrow">
+                        <ul id="todos">
+                            <div class="pending">
+                                <h2>Pending Tasks</h2>
+                            </div>
+                            <div class="completed">
+                                <h2>Completed Tasks</h2>
+                            </div>
+                        </ul>
+                    </ol>
+                </div> -->
+
     </div>
+
+
 
     <!-- <button onclick="notifyMe()">Notify me!</button> -->
 
@@ -86,28 +181,28 @@
 
     <script>
         const user = "yatharth"
-        const url = `https://internapp.vercel.app/${user}/todos/`  
-        
-        function trueValue(final){
+        const url = `https://internapp.vercel.app/${user}/todos/`
+
+        function trueValue(final) {
             console.log("True Value")
             $.ajax({
-                        url: final,
-                        type: 'PUT',
-                        contentType: 'application/json',
-                        data: JSON.stringify({
-                            completed: true
-                        }),
-                        success:
-                            function (data) {
-                                console.log("Success")
-                                console.log(data)
-                                // window.location.reload()
-                            }
-                    })
+                url: final,
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    completed: true
+                }),
+                success:
+                    function (data) {
+                        console.log("Success")
+                        console.log(data)
+                        // window.location.reload()
+                    }
+            })
         }
 
-        function falseValue(final){
-            console.log("False" )
+        function falseValue(final) {
+            console.log("False")
             $.ajax({
                 url: final,
                 type: 'PUT',
@@ -125,101 +220,129 @@
 
             })
         }
-        
-        
+
+
         function checkBoxClick(id) {
-                // console.log("Function Called")
-                // console.log(url + id)
-                const final = url + id
-                var param
-                $.get({
-                    url : url + id,
-                    success: function(data){
-                        console.log(data)
-                        // param = data
-                        // console.log(param.title)
-                        // console.log(param.description)
-                        // console.log(param.id)
-                        console.log(data.completed)
-                        data.completed ? falseValue(final) : trueValue(final)
-                    }
-                })
-                // var params = {
-                    
-                // }
-                // if(!param.completed){
-                        
-                // }else{
-                    
+            // console.log("Function Called")
+            // console.log(url + id)
+            const final = url + id
+            var param
+            $.get({
+                url: url + id,
+                success: function (data) {
+                    console.log(data)
+                    // param = data
+                    // console.log(param.title)
+                    // console.log(param.description)
+                    // console.log(param.id)
+                    console.log(data.completed)
+                    data.completed ? falseValue(final) : trueValue(final)
                 }
-                
-            
-        
-            function del(id){
-                console.log("Function Called")
-                console.log(url + id)
-                const final = url + id
-                $.ajax({
-                    url: final,
-                    type: 'DELETE',
-                    success: function (data) {
-                        console.log(data)
-                        // window.location.reload();
-                    }
-                })
-            }
-            
-            
+            })
+            // var params = {
+
+            // }
+            // if(!param.completed){
+
+            // }else{
+
+        }
 
 
-        $(function(){
+
+        function del(id) {
+            console.log("Function Called")
+            console.log(url + id)
+            const final = url + id
+            $.ajax({
+                url: final,
+                type: 'DELETE',
+                success: function (data) {
+                    console.log(data)
+                    // window.location.reload();
+                }
+            })
+        }
+
+
+
+
+        $(function () {
             $(".error").hide()
+            
             // $(`<a href='${url}'>Link</a>`).appendTo("#todo")
-            $("form").css({
-                display : "flex",
-                flexDirection : "column",
-                justifyContent : "space-evenly",
-                fontSize : "24px",
-                alignItems : "center",
-                // padding : "10px 20px"
-            }).dialog({
-                autoOpen : false,
-                 title: "Add Task",
-                 width : '380' ,
-                 height : '280'
-            })
-            $("#btn").click(function(){
-               $("form").dialog("open"); 
-            })
+
             $("#todoList").tabs({
-                active: 1
+                active: 0
             });
-            $("ol").sortable({axis : "y", containment:'#todoList'})
+            $("ol").sortable({ axis: "y", containment: '#todoList' })
+            $("#datepicker").datepicker({
+                showOn: "button",
+                buttonImage: "images/calendar.gif",
+                buttonImageOnly: true,
+                buttonText: "Select date"
+            });
+
 
             getList();
 
-            function getList(){
-                
+
+
+            function getList() {
+
                 $.get(url, function (data) {
                     if (data == '' || data == null) {
                         $("<p>Add new task...</p>").appendTo(".pending")
                         $("<p>Add new task...</p>").appendTo(".completed")
                     } else {
                         $.each(data, function (i, item) {
+                            const card = `<div class='list' > 
+        
+                                        <div class="div1">
+                                            <input type="checkbox"  onclick="checkBoxClick('${item.id}')" id="checkBox"/> 
+                                            <div>
+                                            <span class="title">${item.title}</span> 
+                                            <span class="desc">${item.description}</span> 
+                                            </div>
+                                            <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')""><i  class="fa-solid fa-trash-can close"></i></button>
+                                        </div>    
+                                        </div>
+                                    `
+                            const card1 = `<div class='list' > 
+        
+                                        <div class="div2">
+                                            <input type="checkbox"  onclick="checkBoxClick('${item.id}')" id="checkBox" checked/> 
+                                            <div>
+                                            <span class="title">${item.title}</span> 
+                                            <span class="desc">${item.description}</span> 
+                                            <div>
+                                            <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')""><i  class="fa-solid fa-trash-can close"></i></button>
+                                        </div>    
+                                        </div>
+                                    `
                             console.log(item.completed)
                             if (item.completed) {
                                 // $("<p>No tasks pending...</p>").appendTo(".pending")
-                                $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')" checked/> Title: ${item.title} <br> Description: ${item.description}<br><button id="${item.id}" onclick="del('${item.id}')"">Delete</button></li><br>`).appendTo(".completed")
+                                $(card1).appendTo(".completed")
+                                // $(".desc").hide()
+                                // $(".div2").click(function(){
+                                //     $(this).siblings().toggle("slow")
+                                // })
                             } else {
                                 // $("<p>Complete your pending tasks</p>").appendTo(".completed")
-                                $(`<li class="todo-item"><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> Title: ${item.title} <br> Description: ${item.description}<br><button id="${item.id}" onclick="del('${item.id}')"">Delete</button></li><br>`).appendTo(".pending")
+                                // $(".pending").append(`<li><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> <p>Title: ${item.title} <br> Description: ${item.description}</p></li>`)
+                                $(".pending").append(card)
+                                // $(".desc").hide()
+                                $(".div1").click(function () {
+                                    // $(this).siblings().toggle("slow")
+                                })
                             }
                         })
                     }
                 })
             }
 
-            
+
 
             $("#addTask").click(function (e) {
                 e.preventDefault();
@@ -238,7 +361,7 @@
                         contentType: "application/json",
                         success: function (data) {
                             console.log(data);
-                            $("form").dialog("close"); 
+                            $("form").dialog("close");
                             $(".pending").html = ''
                             $(".completed").html = ''
                             getList();
@@ -251,19 +374,19 @@
                     $(".error").show("slow")
                 }
             }).css({
-                width : '50%',
-                cursor : 'pointer'
+                width: '50%',
+                cursor: 'pointer'
 
             })
 
-            
+
             // $("input[type=checkbox]").prop(":checked",function(){
 
             // })
-            
+
         })
 
-        
+
 
 
 
@@ -288,4 +411,5 @@
 
     </script>
 </body>
+
 </html>
