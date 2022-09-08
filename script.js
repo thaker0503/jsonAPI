@@ -32,7 +32,7 @@ function showTime() {
     m = m < 10 ? "0" + m : m;
 
     var time = h + ":" + m + session;
-    setTimeout(showTime, 1000);
+    setTimeout(showTime(), 1000);
     console.log("Current Time ==>"+time)
     // console.log(newTime)
     if (time == newTime) {
