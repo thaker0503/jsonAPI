@@ -29,7 +29,7 @@ form {
 
 }
 
-input::placeholder {
+input::placeholder{
     color: white;
     font-size: 14px;
 }

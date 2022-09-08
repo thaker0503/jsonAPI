@@ -1,5 +1,15 @@
 const user = "yatharth"
 const url = `https://internapp.vercel.app/${user}/todos/`
+
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+var time = today.getHours() + ":" + today.getMinutes();
+
+
+today = dd + '/' + mm + '/' + yyyy ;
+// today = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
     
     let pending = [],
         completed = [];
@@ -7,14 +17,15 @@ const url = `https://internapp.vercel.app/${user}/todos/`
     function pendingDiv() {
         $(".pendingtask").empty()
         pending.forEach((item) => {
-            console.log("Pending For Each")
+            // console.log("Pending For Each")
             const card = `<div class='list' > 
                             <div class="div1">
                             <input type="checkbox"  onclick="checkBoxClick('${item.id}')" id="checkBox"/> 
                             <div>
                                 <span class="title">${item.title}</span> 
-                            <span class="desc">${item.description}</span> 
+                                <span class="desc">${item.description}</span> 
                             </div>
+                            <span>Created on: ${today}</span>
                             <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')""><i  class="fa-solid fa-trash-can close"></i></button>
                             </div>    
                             </div>
@@ -27,7 +38,7 @@ const url = `https://internapp.vercel.app/${user}/todos/`
             $(".completedtask").empty()
             completed.forEach((item) => {
             
-                console.log("completed For Each")
+                // console.log("completed For Each")
                 const card = `<div class='list' > 
                         <div class="div2">
                             <input type="checkbox"  onclick="checkBoxClick('${item.id}')" id="checkBox" checked/> 
@@ -35,6 +46,7 @@ const url = `https://internapp.vercel.app/${user}/todos/`
                             <span class="title">${item.title}</span> 
                             <span class="desc">${item.description}</span> 
                             </div>
+                            <span>Created on: ${today}</span>
                             <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')""><i  class="fa-solid fa-trash-can close"></i></button>
                         </div>    
                         </div>
@@ -46,7 +58,7 @@ const url = `https://internapp.vercel.app/${user}/todos/`
         
 
         function trueValue(final) {
-            console.log("True Value")
+            // console.log("True Value")
             $.ajax({
                 url: final,
                 type: 'PUT',
@@ -55,9 +67,9 @@ const url = `https://internapp.vercel.app/${user}/todos/`
                     completed: true
                 }),
                 success:
-                    function (data) {
-                        console.log("Success")
-                        console.log(data)
+                    function () {
+                        // console.log("Success")
+                        // console.log(data)
                         getList()
                         // completedDiv()
                         // pendingDiv()
@@ -67,7 +79,7 @@ const url = `https://internapp.vercel.app/${user}/todos/`
         }
 
         function falseValue(final) {
-            console.log("False")
+            // console.log("False")
             $.ajax({
                 url: final,
                 type: 'PUT',
@@ -76,9 +88,9 @@ const url = `https://internapp.vercel.app/${user}/todos/`
                     completed: false
                 }),
                 success:
-                    function (data) {
-                        console.log("Success")
-                        console.log(data)
+                    function () {
+                        // console.log("Success")
+                        // console.log(data)
                         getList()
                         // pendingDiv()
                         // completedDiv()
@@ -94,16 +106,16 @@ const url = `https://internapp.vercel.app/${user}/todos/`
             // console.log("Function Called")
             // console.log(url + id)
             const final = url + id
-            var param
+            // var param
             $.get({
                 url: url + id,
                 success: function (data) {
-                    console.log(data)
+                    // console.log(data)
                     // param = data
                     // console.log(param.title)
                     // console.log(param.description)
                     // console.log(param.id)
-                    console.log(data.completed)
+                    // console.log(data.completed)
                     data.completed ? falseValue(final) : trueValue(final)
                     
                 }
@@ -122,17 +134,17 @@ const url = `https://internapp.vercel.app/${user}/todos/`
         
     // $(document).ready(function(){
         $(".error").hide()
-
+        // $(".list").children().sortable()
 
             function del(id) {
-                console.log("Function Called")
-                console.log(url + id)
+                // console.log("Function Called")
+                // console.log(url + id)
                 const final = url + id
                 $.ajax({
                     url: final,
                     type: 'DELETE',
                     success: function (data) {
-                        console.log(data)
+                        // console.log(data)
                         
                         pendingDiv()
                         completedDiv()
@@ -147,13 +159,22 @@ const url = `https://internapp.vercel.app/${user}/todos/`
             // $("#todoList").tabs({
             //     active: 0
             // });
-            // $("ol").sortable({ axis: "y", containment: '#todoList' })
-            // $("#datepicker").datepicker({
-            //     showOn: "button",
-            //     buttonImage: "images/calendar.gif",
-            //     buttonImageOnly: true,
-            //     buttonText: "Select date"
-            // });
+            // $(".div1").sortable({ axis: "y", containment: '.pendingtask' })
+            $("#datepicker").datepicker({
+                showOn: "button",
+                buttonImage: "./images/calendar.jpg",
+                buttonImageWidth : "30px",
+                buttonImageOnly: true,
+                buttonText: "Select date"
+            })
+            $(".ui-datepicker-trigger").css({
+                width: '25px',
+                position: 'absolute',
+                right: '0',
+                top: '6px',
+                cursor : 'pointer'
+                
+            });
 
             
 
@@ -175,10 +196,10 @@ const url = `https://internapp.vercel.app/${user}/todos/`
                         $.each(data, function (i, item) {
                             
                             
-                            console.log(item.completed)
+                            // console.log(item.completed)
                             if (item.completed) {
-                                completed.push(item)
-                                console.log("Completed Task:" + JSON.stringify(completed))
+                                completed.unshift(item)
+                                // console.log("Completed Task:" + JSON.stringify(completed))
                                 // $("<p>No tasks pending...</p>").appendTo(".pending")
                                 // $(".completedtask").empty()
                                 // $(card1).appendTo(".completedtask")
@@ -189,7 +210,7 @@ const url = `https://internapp.vercel.app/${user}/todos/`
                                 } else {
                                     
                                     pending.push(item)
-                                    console.log("Pending Task:" + JSON.stringify(pending))
+                                    // console.log("Pending Task:" + JSON.stringify(pending))
                                     // $("<p>Complete your pending tasks</p>").appendTo(".completed")
                                     // $(".pending").append(`<li><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> <p>Title: ${item.title} <br> Description: ${item.description}</p></li>`)
                                     // $(".pendingtask").empty()
@@ -217,7 +238,7 @@ const url = `https://internapp.vercel.app/${user}/todos/`
                     description: $("#description").val(),
                     completed: false
                 };
-                console.log(product);
+                // console.log(product);
                 var newProduct = JSON.stringify(product);
                 if (product.title != "" && product.description != "") {
                     $.ajax({
@@ -225,8 +246,8 @@ const url = `https://internapp.vercel.app/${user}/todos/`
                         type: "POST",
                         data: newProduct,
                         contentType: "application/json",
-                        success: function (data) {
-                            console.log(data);
+                        success: function () {
+                            // console.log(data);
                             // $("form").dialog("close");
                             $("#title").val("").focus()
                             $("#description").val("")
