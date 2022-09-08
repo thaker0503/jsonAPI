@@ -16,7 +16,7 @@ form {
     justify-content: space-between;
 }
 
-.input-fields input {
+.input-fields input,.time-pickable {
     width: 80%;
     margin-right: 20px;
     padding: 10px;
@@ -87,4 +87,28 @@ input::placeholder{
 
 
 
+}
+.time-pickable{
+    width: 100px;
+}
+.time-picker {
+    position: absolute;
+    display: inline-block;
+    padding: 10px;
+    background: #2D6EFD;
+    border-radius: 6px;
+}
+
+.time-picker__select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    text-align: center;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #ffffff;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
 }
