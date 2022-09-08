@@ -6,9 +6,46 @@ var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
 var time = today.getHours() + ":" + today.getMinutes();
+today = dd + '/' + mm + '/' + yyyy
 
 
-today = dd + '/' + mm + '/' + yyyy ;
+showTime()
+
+function showTime() {
+    // var newTime = "06:26 PM";
+    var newTime;
+    $.get(url, function (item) {
+        $.each(item, (i, field) => {
+            newTime = field.reminder
+            console.log("Reminder ==>" + newTime)
+        })
+    })
+    var d = new Date();
+    var h = d.getHours();
+    var m = d.getMinutes();
+    var session = h >= 12 ? ' PM' : ' AM';
+
+    h = h % 12;
+    h = h ? h : 12;
+    // minutes = minutes < 10 ? '0' + minutes : minutes;
+    h = h < 10 ? "0" + h : h;
+    m = m < 10 ? "0" + m : m;
+
+    var time = h + ":" + m + session;
+    setTimeout(showTime, 1000);
+    console.log("Current Time ==>"+time)
+    // console.log(newTime)
+    if (time == newTime) {
+        console.log("If ran ==>")
+        console.log("Reminder")
+        notifyMe("Hey User", "Task reminder check your task...")
+    } else {
+        // console.log("Wait.....")
+
+    }
+
+
+}
 // today = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
     
     let pending = [],
@@ -160,21 +197,21 @@ today = dd + '/' + mm + '/' + yyyy ;
             //     active: 0
             // });
             // $(".div1").sortable({ axis: "y", containment: '.pendingtask' })
-            $("#datepicker").datepicker({
-                showOn: "button",
-                buttonImage: "./images/calendar.jpg",
-                buttonImageWidth : "30px",
-                buttonImageOnly: true,
-                buttonText: "Select date"
-            })
-            $(".ui-datepicker-trigger").css({
-                width: '25px',
-                position: 'absolute',
-                right: '0',
-                top: '6px',
-                cursor : 'pointer'
+            // $("#datepicker").datepicker({
+            //     showOn: "button",
+            //     buttonImage: "./images/calendar.jpg",
+            //     buttonImageWidth : "30px",
+            //     buttonImageOnly: true,
+            //     buttonText: "Select date"
+            // })
+            // $(".ui-datepicker-trigger").css({
+            //     width: '25px',
+            //     position: 'absolute',
+            //     right: '0',
+            //     top: '6px',
+            //     cursor : 'pointer'
                 
-            });
+            // });
 
             
 
@@ -198,7 +235,7 @@ today = dd + '/' + mm + '/' + yyyy ;
                             
                             // console.log(item.completed)
                             if (item.completed) {
-                                completed.unshift(item)
+                                completed.push(item)
                                 // console.log("Completed Task:" + JSON.stringify(completed))
                                 // $("<p>No tasks pending...</p>").appendTo(".pending")
                                 // $(".completedtask").empty()
@@ -292,6 +329,7 @@ today = dd + '/' + mm + '/' + yyyy ;
 
 
         function notifyMe(title,body) {
+            console.log("NOtify Me Called ==>")
                     Notification.requestPermission().then((permission) => {
                         console.log(permission)
                         if (permission === "granted") {
@@ -349,7 +387,7 @@ function show(timePickable) {
 
 function buildPicker(timePickable) {
     const picker = document.createElement("div");
-    const hourOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(numberToOption);
+    const hourOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12  ].map(numberToOption);
     const minuteOptions = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].map(numberToOption);
 
     picker.classList.add("time-picker");
@@ -362,8 +400,8 @@ function buildPicker(timePickable) {
 			${minuteOptions.join("")}
 		</select>
 		<select class="time-picker__select">
-			<option value="am">am</option>
-			<option value="pm">pm</option>
+			<option value="AM">AM</option>
+			<option value="PM">PM</option>
 		</select>
 	`;
 

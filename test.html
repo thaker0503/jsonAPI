@@ -1,71 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-
-    <title>Practice</title>
+    <title>Document</title>
 </head>
-
 <body>
-    <h1>Hello World</h1>
-    <button id="btn">Change</button>
-
+    
     <script>
-        $(document).ready(function () {
-            const url = 'https://internapp.vercel.app/yatharth/todos/'
-            const id = 'dc09598c-38cf-4a9a-89cf-9ea38ad98b55'
-            const final = url + id
+        // get the users current time and timezone
+        var d = new Date();
+        var n = d.getTimezoneOffset();
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+        var today = year + "-" + month + "-" + day;
+        var offset = n / 60;
+        var timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        console.log(timezone);
+        console.log(offset);
+        console.log(today);
 
-            $("#btn").click(function () {
-                $.ajax({
-                    url: final,
-                    type: 'PUT',
-                    contentType : 'application/json',
-                    data: JSON.stringify({
-                        title : "Title Changed",
-                        completed: false
-                    }),
-                    success:
-                        function (data) {
-                            console.log("Success")
-                            console.log(data)
-                        }
-
-                })
-            })
-
-            getList()
-
-            function getList() {
-
-                $.get(url, function (data) {
-                        $.each(data, function (i, item) {
-                            const card = `<div class='list' > 
-        
-                                        <input type="checkbox"  onclick="checkBoxClick('${item.id}')" id="checkBox"/> 
-                                        <span class="todo-description"> 
-                                            <span class="title">${item.title}</span> 
-                                            <span class="desc">${item.description}</span> 
-                                            
-                                        </span>
-                                        <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')""><i  class="fa-solid fa-trash-can close"></i></button>
-                                    `
-                            
-                                // $("<p>Complete your pending tasks</p>").appendTo(".completed")
-                                // $(".pending").append(`<li><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> <p>Title: ${item.title} <br> Description: ${item.description}</p></li>`)
-                                $("body").append(card)
-                            
-                        })
-                    
-                })
-            }
-        })
     </script>
-
 </body>
-
 </html>
