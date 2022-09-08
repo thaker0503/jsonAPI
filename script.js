@@ -1,5 +1,7 @@
 const user = "yatharth"
 const url = `https://internapp.vercel.app/${user}/todos/`
+let pending = [],
+    completed = [];
 
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
@@ -14,11 +16,15 @@ showTime()
 function showTime() {
     // var newTime = "06:26 PM";
     var newTime;
-    $.get(url, function (item) {
-        $.each(item, (i, field) => {
-            newTime = field.reminder
-            console.log("Reminder ==>" + newTime)
-        })
+    // $.get(url, function (item) {
+    //     $.each(item, (i, field) => {
+    //         newTime = field.reminder
+    //         console.log("Reminder ==>" + newTime)
+    //     })
+    // })
+    pending.forEach((item) => {
+        newTime = item.reminder
+        console.log("Reminder ==>" + newTime)
     })
     var d = new Date();
     var h = d.getHours();
@@ -48,8 +54,7 @@ function showTime() {
 }
 // today = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
     
-    let pending = [],
-        completed = [];
+    
 
     function pendingDiv() {
         $(".pendingtask").empty()
@@ -277,12 +282,12 @@ function showTime() {
                     completed: false
                 };
                 // console.log(product);
-                var newProduct = JSON.stringify(product);
+                // var newProduct = ;
                 if (product.title != "" && product.description != "" && product.reminder != "") {
                     $.ajax({
                         url: url,
                         type: "POST",
-                        data: newProduct,
+                        data: JSON.stringify(product),
                         contentType: "application/json",
                         success: function () {
                             // console.log(data);
