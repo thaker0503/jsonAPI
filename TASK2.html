@@ -184,6 +184,51 @@
     <script>
         const user = "yatharth"
         const url = `https://internapp.vercel.app/${user}/todos/`
+        let pending = [],
+            completed = [];
+
+        function pendingDiv() {
+            $(".pendingtask").empty()
+            pending.forEach((item, id) => {
+                console.log("Pending For Each")
+                const card = `<div class='list' > 
+        
+                                        <div class="div1">
+                                            <input type="checkbox"  onclick="checkBoxClick('${item.id}')" id="checkBox"/> 
+                                            <div>
+                                                <span class="title">${item.title}</span> 
+                                            <span class="desc">${item.description}</span> 
+                                            </div>
+                                            <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')""><i  class="fa-solid fa-trash-can close"></i></button>
+                                            </div>    
+                                            </div>
+                                            `
+                                            $(card).appendTo(".pendingtask")
+                                        })
+                                    }
+                                    
+            function completedDiv() {
+                $(".completedtask").empty()
+                completed.forEach((item, id) => {
+                
+                console.log("completed For Each")
+                const card = `<div class='list' > 
+        
+                                        <div class="div2">
+                                            <input type="checkbox"  onclick="checkBoxClick('${item.id}')" id="checkBox" checked/> 
+                                            <div>
+                                            <span class="title">${item.title}</span> 
+                                            <span class="desc">${item.description}</span> 
+                                            </div>
+                                            <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')""><i  class="fa-solid fa-trash-can close"></i></button>
+                                        </div>    
+                                        </div>
+                                    `
+                $(card).appendTo(".completedtask")
+            })
+        }
+
+        
 
         function trueValue(final) {
             console.log("True Value")
@@ -198,6 +243,9 @@
                     function (data) {
                         console.log("Success")
                         console.log(data)
+                        getList()
+                        // completedDiv()
+                        // pendingDiv()
                         // window.location.reload()
                     }
             })
@@ -216,6 +264,9 @@
                     function (data) {
                         console.log("Success")
                         console.log(data)
+                        getList()
+                        // pendingDiv()
+                        // completedDiv()
                         // window.location.reload()
                     }
 
@@ -239,15 +290,10 @@
                     // console.log(param.id)
                     console.log(data.completed)
                     data.completed ? falseValue(final) : trueValue(final)
-                    // getList();
+                    
                 }
             })
-            // var params = {
-
-            // }
-            // if(!param.completed){
-
-            // }else{
+            
 
         }
 
@@ -259,7 +305,10 @@
 
 
         
-            $(".error").hide()
+    // $(document).ready(function(){
+        $(".error").hide()
+
+
             function del(id) {
                 console.log("Function Called")
                 console.log(url + id)
@@ -269,8 +318,9 @@
                     type: 'DELETE',
                     success: function (data) {
                         console.log(data)
-                        $(".pendingtask")
-                        $(".completedtask")
+                        
+                        pendingDiv()
+                        completedDiv()
                         getList();
                         // window.location.reload();
                     }
@@ -300,54 +350,43 @@
 
                 $.get(url, function (data) {
                     if (data == '' || data == null) {
-                        $("<p>Add new task...</p>").appendTo(".pending")
-                        $("<p>Add new task...</p>").appendTo(".completed")
+                        $(".pendingtask").empty()
+                        $(".completedtask").empty()
+                        $("<p>Add new task...</p>").appendTo(".pendingtask")
+                        $("<p>Add new task...</p>").appendTo(".completedtask")
                     } else {
+                        pending = []
+                        completed = []
                         $.each(data, function (i, item) {
-                            const card = `<div class='list' > 
-        
-                                        <div class="div1">
-                                            <input type="checkbox"  onclick="checkBoxClick('${item.id}')" id="checkBox"/> 
-                                            <div>
-                                            <span class="title">${item.title}</span> 
-                                            <span class="desc">${item.description}</span> 
-                                            </div>
-                                            <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')""><i  class="fa-solid fa-trash-can close"></i></button>
-                                        </div>    
-                                        </div>
-                                    `
-                            const card1 = `<div class='list' > 
-        
-                                        <div class="div2">
-                                            <input type="checkbox"  onclick="checkBoxClick('${item.id}')" id="checkBox" checked/> 
-                                            <div>
-                                            <span class="title">${item.title}</span> 
-                                            <span class="desc">${item.description}</span> 
-                                            <div>
-                                            <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')""><i  class="fa-solid fa-trash-can close"></i></button>
-                                        </div>    
-                                        </div>
-                                    `
+                            
+                            
                             console.log(item.completed)
                             if (item.completed) {
+                                completed.push(item)
+                                console.log("Completed Task:" + JSON.stringify(completed))
                                 // $("<p>No tasks pending...</p>").appendTo(".pending")
                                 // $(".completedtask").empty()
-                                $(card1).appendTo(".completedtask")
+                                // $(card1).appendTo(".completedtask")
                                 // $(".desc").hide()
                                 // $(".div2").click(function(){
-                                //     $(this).siblings().toggle("slow")
-                                // })
-                            } else {
-                                // $("<p>Complete your pending tasks</p>").appendTo(".completed")
-                                // $(".pending").append(`<li><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> <p>Title: ${item.title} <br> Description: ${item.description}</p></li>`)
-                                // $(".pendingtask").empty()
-                                $(".pendingtask").append(card)
-                                // $(".desc").hide()
-                                $(".div1").click(function () {
-                                    // $(this).siblings().toggle("slow")
+                                    //     $(this).siblings().toggle("slow")
+                                    // })
+                                } else {
+                                    
+                                    pending.push(item)
+                                    console.log("Pending Task:" + JSON.stringify(pending))
+                                    // $("<p>Complete your pending tasks</p>").appendTo(".completed")
+                                    // $(".pending").append(`<li><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> <p>Title: ${item.title} <br> Description: ${item.description}</p></li>`)
+                                    // $(".pendingtask").empty()
+                                    // $(".pendingtask").append(card)
+                                    // $(".desc").hide()
+                                    // $(".div1").click(function () {
+                                        //     // $(this).siblings().toggle("slow")
+                                        // })
+                                    }
                                 })
-                            }
-                        })
+                                pendingDiv()
+                                completedDiv()
                     }
                 })
             }
@@ -374,6 +413,9 @@
                         success: function (data) {
                             console.log(data);
                             // $("form").dialog("close");
+                            $("#title").val("").focus()
+                            $("#description").val("")
+                            
                             $(".pendingtask").empty()
                             $(".completedtask").empty()
                             getList();
@@ -390,6 +432,7 @@
                 cursor: 'pointer'
 
             })
+        // })
 
 
             // $("input[type=checkbox]").prop(":checked",function(){
