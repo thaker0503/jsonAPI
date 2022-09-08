@@ -255,7 +255,7 @@ today = dd + '/' + mm + '/' + yyyy ;
                             $("#title").val("").focus()
                             $("#description").val("")
                             $("#time").val("")
-                            notifyMe("title", "body")
+                            notifyMe("Hey User", "Task created Successfully...")
                                 // $(".pendingtask").empty()
                                 // $(".completedtask").empty()
                             getList();
