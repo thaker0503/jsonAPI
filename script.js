@@ -1,16 +1,4 @@
-const bc = new BroadcastChannel("my-awesome-site");
 
-bc.onmessage = (event) => {
-    if (event.data === `Am I the first?`) {
-        bc.postMessage(`No you're not.`);
-        alert(`Another tab of this site just got opened`);
-    }
-    if (event.data === `No you're not.`) {
-        alert(`An instance of this site is already running`);
-    }
-};
-
-bc.postMessage(`Am I the first?`);
 
 
 function elapsedTime(taskTimer) {
