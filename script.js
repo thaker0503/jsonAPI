@@ -1,57 +1,111 @@
+const bc = new BroadcastChannel("my-awesome-site");
+
+bc.onmessage = (event) => {
+    if (event.data === `Am I the first?`) {
+        bc.postMessage(`No you're not.`);
+        alert(`Another tab of this site just got opened`);
+    }
+    if (event.data === `No you're not.`) {
+        alert(`An instance of this site is already running`);
+    }
+};
+
+bc.postMessage(`Am I the first?`);
+
+
+function elapsedTime(taskTimer) {
+    // const taskTimer = "14:22:00";
+    const currentTime = new Date();
+    const newTime = new Date();
+    const [hr, mm, ss] = taskTimer.split(":");
+    newTime.setHours(+hr, +mm, +ss);
+    console.log("HOURS", newTime.getHours(), newTime.getMinutes());
+    const elapsedMs = newTime - currentTime;
+    console.log("Elasped", elapsedMs);
+    if (elapsedMs > 0) {
+        setTimeout(() => {
+            // alert("TImer reached")
+            notifyMe("Reminder", "This is the reminder for your task...")
+            
+        }, [elapsedMs])
+    }
+}
+
+window.addEventListener('beforeunload', function (e) {
+    e.preventDefault();
+    e.returnValue = "Don't Go";
+});
+
+$(document).ready(function () {
+    
+    elapsedTime()
+});
+
+
 const user = "yatharth"
 const url = `https://internapp.vercel.app/${user}/todos/`
-let pending = [],
-    completed = [];
+var pending = [],
+    completed = [],
+    reminder= [];
 
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
-var time = today.getHours() + ":" + today.getMinutes();
+var hh = today.getHours() < 12 ? "0" + today.getHours() : today.getHours()
+var mm = today.getMinutes() < 12 ? "0" + today.getMinutes() : today.getMinutes()
+var time = hh + ":" + mm
 today = dd + '/' + mm + '/' + yyyy
+// console.log(time)
 
 
-showTime()
-
-function showTime() {
-    // var newTime = "06:26 PM";
-    var newTime;
-    // $.get(url, function (item) {
-    //     $.each(item, (i, field) => {
-    //         newTime = field.reminder
-    //         console.log("Reminder ==>" + newTime)
-    //     })
-    // })
-    pending.forEach((item) => {
-        newTime = item.reminder
-        console.log("Reminder ==>" + newTime)
-    })
-    var d = new Date();
-    var h = d.getHours();
-    var m = d.getMinutes();
-    var session = h >= 12 ? ' PM' : ' AM';
-
-    h = h % 12;
-    h = h ? h : 12;
-    // minutes = minutes < 10 ? '0' + minutes : minutes;
-    h = h < 10 ? "0" + h : h;
-    m = m < 10 ? "0" + m : m;
-
-    var time = h + ":" + m + session;
-    setTimeout(showTime(), 1000);
-    console.log("Current Time ==>"+time)
-    // console.log(newTime)
-    if (time == newTime) {
-        console.log("If ran ==>")
-        console.log("Reminder")
-        notifyMe("Hey User", "Task reminder check your task...")
-    } else {
-        // console.log("Wait.....")
-
-    }
 
 
-}
+
+// showTime()
+
+
+// function showTime() {
+//     // var newTime = "06:26 PM";
+//     var newTime;
+//     // $.get(url, function (item) {
+//     //     $.each(item, (i, field) => {
+//     //         newTime = field.reminder
+//     //         console.log("Reminder ==>" + newTime)
+//     //     })
+//     // })
+//     pending.forEach((item) => {
+//         newTime = item.reminder
+//         console.log("Reminder ==>" + newTime)
+//     })
+//     var d = new Date();
+//     var h = d.getHours();
+//     var m = d.getMinutes();
+//     var session = h >= 12 ? ' PM' : ' AM';
+
+//     h = h % 12;
+//     h = h ? h : 12;
+//     // minutes = minutes < 10 ? '0' + minutes : minutes;
+//     h = h < 10 ? "0" + h : h;
+//     m = m < 10 ? "0" + m : m;
+
+//     var time = h + ":" + m + session;
+//     setTimeout(showTime(), 1000);
+//     console.log("Current Time ==>" + time)
+//     // console.log(newTime)
+//     if (time == newTime) {
+//         console.log("If ran ==>")
+//         console.log("Reminder")
+//         notifyMe("Hey User", "Task reminder check your task...")
+//     } else {
+//         // console.log("Wait.....")
+
+//     }
+// }
+
+
+
+// }
 // today = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
     
     
@@ -67,6 +121,8 @@ function showTime() {
                                 <span class="title">${item.title}</span> 
                                 <span class="desc">${item.description}</span> 
                             </div>
+
+                            <span>Remind Me at: ${item.reminder}</span>
                             <span>Created on: ${today}</span>
                             <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')""><i  class="fa-solid fa-trash-can close"></i></button>
                             </div>    
@@ -88,6 +144,7 @@ function showTime() {
                             <span class="title">${item.title}</span> 
                             <span class="desc">${item.description}</span> 
                             </div>
+                            <span>Remind Me at: ${item.reminder}</span>
                             <span>Created on: ${today}</span>
                             <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')""><i  class="fa-solid fa-trash-can close"></i></button>
                         </div>    
@@ -138,8 +195,6 @@ function showTime() {
                         // completedDiv()
                         // window.location.reload()
                     }
-
-
             })
         }
 
@@ -233,14 +288,15 @@ function showTime() {
                         $("<p>Add new task...</p>").appendTo(".pendingtask")
                         $("<p>Add new task...</p>").appendTo(".completedtask")
                     } else {
+                        // console.log(data[0])
                         pending = []
                         completed = []
                         $.each(data, function (i, item) {
-                            
-                            
+                            // console.log(i,item)
                             // console.log(item.completed)
-                            if (item.completed) {
+                            if (item.completed){
                                 completed.push(item)
+                                // reminder.shift(item.reminder)
                                 // console.log("Completed Task:" + JSON.stringify(completed))
                                 // $("<p>No tasks pending...</p>").appendTo(".pending")
                                 // $(".completedtask").empty()
@@ -250,8 +306,17 @@ function showTime() {
                                     //     $(this).siblings().toggle("slow")
                                     // })
                                 } else {
-                                    
+                                    reminder.push(item.reminder)
+                                    // console.log(reminder)
                                     pending.push(item)
+                                    reminder.forEach(item => {
+                                        var newTime = item + ":00"
+                                        elapsedTime(newTime)
+                                    })
+                                    // setInterval(() => {
+                                    //     notifyMe("Reminder", "Please check your task")
+                                    // }, newInterval);
+                                    
                                     // console.log("Pending Task:" + JSON.stringify(pending))
                                     // $("<p>Complete your pending tasks</p>").appendTo(".completed")
                                     // $(".pending").append(`<li><input id='checkBox' type='checkbox' onclick="checkBoxClick('${item.id}')"/> <p>Title: ${item.title} <br> Description: ${item.description}</p></li>`)
@@ -268,7 +333,17 @@ function showTime() {
                     }
                 })
             }
-
+            
+            // setInterval(() => {
+            //     console.log(reminder)
+            // }, 5000);
+            // function remindUser(){
+            //     let executed = false
+            //     if (!executed) {
+            //         executed = true
+            //         notifyMe("Reminder","Please check your task")
+            //     }
+            // }
             
 
 
@@ -301,6 +376,7 @@ function showTime() {
                                 // $(".pendingtask").empty()
                                 // $(".completedtask").empty()
                             getList();
+                            elapsedTime();
                             // window.location.reload()
                             // $("ul").append(`<li>Name: ${data.name},<br/>Price: ${data.price},<br/>Description: ${data.desc}<br/><button>Edit</button></li><br/>`);
                         }
@@ -312,7 +388,6 @@ function showTime() {
             }).css({
                 width: '50%',
                 cursor: 'pointer'
-
             })
         // })
 
@@ -328,136 +403,31 @@ function showTime() {
 
 
 
-
-
+// var something = (function () {
+//     var executed = false;
+//     return function () {
+//         if (!executed) {
+//             executed = true;
+//             notifyMe("Reminder", "Please check your task")
+//         }
+//     };
+// })();
         
 
 
-        function notifyMe(title,body) {
-            console.log("NOtify Me Called ==>")
-                    Notification.requestPermission().then((permission) => {
-                        console.log(permission)
-                        if (permission === "granted") {
-                            let icon = './images/calendar.jpg';
-                            var notification = new Notification(title, { body, icon });
-                        }
-                    });
-
-
-                
+function notifyMe(title, body) {
+    var executed = false;
+    if (!executed) {
+        executed = true
+        console.log("Notify Me Called ==>")
+        Notification.requestPermission().then((permission) => {
+            console.log(permission)
+            if (permission === "granted") {
+                let icon = './images/calendar.jpg';
+                var notification = new Notification(title, { body, icon });
             }
-
-
-function activate() {
-    
-
-    document.querySelectorAll(".time-pickable").forEach(timePickable => {
-        let activePicker = null;
-
-        timePickable.addEventListener("focus", () => {
-            if (activePicker) return;
-
-            activePicker = show(timePickable);
-
-            const onClickAway = ({ target }) => {
-                if (
-                    target === activePicker
-                    || target === timePickable
-                    || activePicker.contains(target)
-                ) {
-                    return;
-                }
-
-                document.removeEventListener("mousedown", onClickAway);
-                document.body.removeChild(activePicker);
-                activePicker = null;
-            };
-
-            document.addEventListener("mousedown", onClickAway);
         });
-    });
-}
-
-function show(timePickable) {
-    const picker = buildPicker(timePickable);
-    const { bottom: top, left } = timePickable.getBoundingClientRect();
-
-    picker.style.top = `${top}px`;
-    picker.style.left = `${left}px`;
-
-    document.body.appendChild(picker);
-
-    return picker;
-}
-
-function buildPicker(timePickable) {
-    const picker = document.createElement("div");
-    const hourOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12  ].map(numberToOption);
-    const minuteOptions = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].map(numberToOption);
-
-    picker.classList.add("time-picker");
-    picker.innerHTML = `
-		<select class="time-picker__select">
-			${hourOptions.join("")}
-		</select>
-		:
-		<select class="time-picker__select">
-			${minuteOptions.join("")}
-		</select>
-		<select class="time-picker__select">
-			<option value="AM">AM</option>
-			<option value="PM">PM</option>
-		</select>
-	`;
-
-    const selects = getSelectsFromPicker(picker);
-
-    selects.hour.addEventListener("change", () => timePickable.value = getTimeStringFromPicker(picker));
-    selects.minute.addEventListener("change", () => timePickable.value = getTimeStringFromPicker(picker));
-    selects.meridiem.addEventListener("change", () => timePickable.value = getTimeStringFromPicker(picker));
-
-    if (timePickable.value) {
-        const { hour, minute, meridiem } = getTimePartsFromPickable(timePickable);
-
-        selects.hour.value = hour;
-        selects.minute.value = minute;
-        selects.meridiem.value = meridiem;
     }
-
-    return picker;
 }
 
-function getTimePartsFromPickable(timePickable) {
-    const pattern = /^(\d+):(\d+) (am|pm)$/;
-    const [hour, minute, meridiem] = Array.from(timePickable.value.match(pattern)).splice(1);
 
-    return {
-        hour,
-        minute,
-        meridiem
-    };
-}
-
-function getSelectsFromPicker(timePicker) {
-    const [hour, minute, meridiem] = timePicker.querySelectorAll(".time-picker__select");
-
-    return {
-        hour,
-        minute,
-        meridiem
-    };
-}
-
-function getTimeStringFromPicker(timePicker) {
-    const selects = getSelectsFromPicker(timePicker);
-
-    return `${selects.hour.value}:${selects.minute.value} ${selects.meridiem.value}`;
-}
-
-function numberToOption(number) {
-    const padded = number.toString().padStart(2, "0");
-
-    return `<option value="${padded}">${padded}</option>`;
-}
-
-activate();
