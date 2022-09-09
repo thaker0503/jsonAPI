@@ -27,7 +27,19 @@ function elapsedTime(taskTimer) {
 $(document).ready(function () {
     
     elapsedTime()
+    
 });
+
+$.keyframe.define([{
+    name: 'anim',
+    '0%': {
+        'transform': 'translateY(50%)'
+    },
+    '100%': {
+        'transform': 'translateY(0)'
+    }
+}
+]);
 
 
 const user = "yatharth"
@@ -419,4 +431,3 @@ function notifyMe(title, body) {
 }
 
 
-$
