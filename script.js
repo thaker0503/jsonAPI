@@ -19,10 +19,10 @@ function elapsedTime(taskTimer) {
     }
 }
 
-window.addEventListener('beforeunload', function (e) {
-    e.preventDefault();
-    e.returnValue = "Don't Go";
-});
+// window.addEventListener('beforeunload', function (e) {
+//     e.preventDefault();
+//     e.returnValue = "Don't Go";
+// });
 
 $(document).ready(function () {
     
@@ -419,3 +419,4 @@ function notifyMe(title, body) {
 }
 
 
+$
