@@ -18,7 +18,9 @@ var time = hh + ":" + mm
 today = dd + '/' + mm + '/' + yyyy
 
 // hiding the error message that is to be shown when user tries to submit empty task
-$(".error").hide()
+$(".error1").hide()
+$(".error2").hide()
+$(".error3").hide()
 
 // creating class App that is to be instantiated to manipulate the application
 class App {
@@ -193,10 +195,19 @@ $("#addTask").click(function (e) {
         completed: false
     };
     console.log(product)
-    if (product.title === "" || product.description === "") {
+    if (product.title === "" || product.description === "" || product.reminder === "") {
         console.log("If ran")
-        $(".error").show("slow")
+        if (product.title === "") {
+            $(".error1").show("slow")
+        } else if (product.description === "") {
+            $(".error2").show("slow")
+        } else {
+            $(".error3").show("slow")
+        }
     } else {
+        $(".error1").hide()
+        $(".error2").hide()
+        $(".error3").hide()
         console.log("Else ran")
         app.sendTodos(url, product)
     }
