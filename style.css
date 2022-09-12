@@ -117,8 +117,12 @@ input::placeholder{
     cursor: pointer;
     font-family: 'Heebo', sans-serif;
 }
-.div1,.div2{
+
+.animation1{
     animation: anim 800ms ease;
+}
+.animation2{
+    animation: anim2 800ms ease;
 }
 
 @keyframes anim {
@@ -132,5 +136,19 @@ input::placeholder{
     100%{
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+@keyframes anim2 {
+    0%{
+        opacity: 1;
+        transform: translateX(0);
+    }
+    50%{
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 0;
+        transform: translateX(50%);
     }
 }

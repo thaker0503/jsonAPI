@@ -192,6 +192,7 @@ class App {
 const app = new App(url)
 
 
+
 // creating event listener on click and calling the sendtodos method
 $("#addTask").click(function (e) {
     e.preventDefault();
@@ -244,38 +245,40 @@ function checkBoxClick(id) {
     $.get({
         url: final,
         success: function (data) {
-            data.completed ? app.falseValue(final) : app.trueValue(final)
+            data.completed ? app.falseValue(final,id) : app.trueValue(final,id)
         }
     })
 }
 
+
+
 function pendingDiv() {
     $(".pendingtask").empty()
     pending.forEach((item) => {
-        const card = `<div class='list' > 
-                            <div class="div1">
-                            <input type="checkbox"  id="checkBox" onclick="checkBoxClick('${item.id}')"/> 
-                            <div>
-                                <span class="title">${item.title}</span> 
-                                <span class="desc">${item.description}</span> 
-                            </div>
+            var card = `<div class='list ${item.id}' > 
+                            <div class="div1 ">
+                                <input type="checkbox"  id="checkBox" onclick="checkBoxClick('${item.id}')"/> 
+                                <div>
+                                    <span class="title">${item.title}</span> 
+                                    <span class="desc">${item.description}</span> 
+                                </div>
 
-                            <span>Reminder at: ${item.reminder}</span>
-                            <span>Created on: ${today}</span>
-                            <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')" ><i  class="fa-solid fa-trash-can close"></i></button>
+                                <span>Reminder at: ${item.reminder}</span>
+                                <span>Created on: ${today}</span>
+                                <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')" ><i  class="fa-solid fa-trash-can close"></i></button>
                             </div>    
                             </div>
-                            `
-        
+                            `    
         $(".pendingtask").append(card)
     })
+    
 }
 
 function completedDiv() {
     $(".completedtask").empty()
     completed.forEach((item) => {
-        const card = `<div class='list' > 
-                        <div class="div2">
+        const card = `<div class='list ' > 
+                        <div class="div2 ${item.id}">
                             <input type="checkbox"   id="checkBox" onclick="checkBoxClick('${item.id}')" checked/> 
                             <div>
                             <span class="title">${item.title}</span> 
