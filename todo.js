@@ -21,7 +21,7 @@ $(".error").hide()
 
 // creating class App that is to be instantiated to manipulate the application
 class App {
-    // creating constructor for 
+    // creating constructor for the App class
     constructor(url) {
         $.get(url, function (data) {
             if (data == '' || data == null) {
@@ -51,6 +51,7 @@ class App {
         })  
     }
 
+    // this method helps to get the ToDos from the API and calls the pendingDiv() and completedDiv() functions to display data on the webpage
     getTodos(url) {
         console.log("Getting Todoss")
         $.get(url, function (data) {
@@ -81,7 +82,7 @@ class App {
         })  
     }
 
-
+    // this method of the App class helps in sending the todos entered by user to the API to store it and then calls the getTodos() method to get the POSTed data from the API
     sendTodos(url, product) {
         $.ajax({
             url: url,
@@ -97,6 +98,7 @@ class App {
         });
     }
 
+    // this method of the App class deletes the specific Todo from the API and then calls the getTodos() method to get the POSTed data from the API
     delTodo(id) {
         const final = url + id
         $.ajax({
@@ -110,6 +112,7 @@ class App {
         })
     }
 
+    // this method of App class is used to display the data inside the pendingDiv() if its completed key is false in the API data
     falseValue(final) {
         $.ajax({
             url: final,
@@ -125,6 +128,7 @@ class App {
         })
     }
 
+    // this method of App class is used to display the data inside the pendingDiv() if its completed key is true in the API data
     trueValue(final) {
         $.ajax({
             url: final,
@@ -140,24 +144,22 @@ class App {
         })
     }
 
+    // this method of the App class is used for setting timer and whenever it is called it starts the timer and whenever the timer ends it calls notifyMe() method to send notification
     elapsedTime(taskTimer) {
-        // const taskTimer = "14:22:00";
         const currentTime = new Date();
         const newTime = new Date();
         const [hr, mm, ss] = taskTimer.split(":");
         newTime.setHours(+hr, +mm, +ss);
         console.log("HOURS", newTime.getHours(), newTime.getMinutes());
         const elapsedMs = newTime - currentTime;
-        console.log("Elasped", elapsedMs);
         if (elapsedMs > 0) {
             setTimeout(() => {
-                // alert("TImer reached")
                 app.notifyMe("Reminder", "This is the reminder for your task...")
-
             }, [elapsedMs])
         }
     }
 
+    // this method of App class is used to send notification to the user
     notifyMe(title, body) {
         var executed = false;
         if (!executed) {
@@ -175,11 +177,11 @@ class App {
 }
 
 
-
+// instatiating the App class
 const app = new App(url)
 
 
-
+// creating event listener on click and calling the sendtodos method
 $("#addTask").click(function (e) {
     e.preventDefault();
     var product = {
@@ -201,11 +203,12 @@ $("#addTask").click(function (e) {
     cursor: 'pointer'
 })
 
-
+// function to call the delTodo() method of the App class
 function del(id) {
     app.delTodo(id)
 }
 
+// function to call the falseValue() or trueValue() method of the App class
 function checkBoxClick(id) {
     const final = url + id
     $.get({
