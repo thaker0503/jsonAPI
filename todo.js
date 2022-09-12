@@ -1,5 +1,6 @@
 // url of the API
 const url = "https://internapp.vercel.app/yatharth/todos/"
+Notification.requestPermission()
 
 // declaring the arrays globally for different types of tasks and also storing the values of the timer in the reminder array
 var pending = [],
@@ -80,6 +81,7 @@ class App {
                 completedDiv()
             }
         })  
+        
     }
 
     // this method of the App class helps in sending the todos entered by user to the API to store it and then calls the getTodos() method to get the POSTed data from the API
