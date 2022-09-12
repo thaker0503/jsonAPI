@@ -30,16 +30,6 @@ $(document).ready(function () {
     
 });
 
-$.keyframe.define([{
-    name: 'anim',
-    '0%': {
-        'transform': 'translateY(50%)'
-    },
-    '100%': {
-        'transform': 'translateY(0)'
-    }
-}
-]);
 
 
 const user = "yatharth"
