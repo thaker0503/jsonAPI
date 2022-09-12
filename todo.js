@@ -128,6 +128,7 @@ class App {
             success:
                 function () {
                     app.getTodos(url)
+                    // $(`.${id}`).addClass("animation")
                 }
         })
     }
@@ -144,6 +145,7 @@ class App {
             success:
                 function () {
                     app.getTodos(url)
+                    // $(`.${id}`).addClass("animation")
                 }
         })
     }
@@ -174,6 +176,11 @@ class App {
                 if (permission === "granted") {
                     let icon = './images/calendar.jpg';
                     var notification = new Notification(title, { body, icon });
+                    notification.addEventListener('click', (e) => {
+                        // console.log("NOtification Clicked....")
+                        e.preventDefault();
+                        window.open('https://thaker0503.github.io/jsonAPI/TASK2.html', '_blank');
+                    })
                 }
             });
         }
@@ -188,20 +195,30 @@ const app = new App(url)
 // creating event listener on click and calling the sendtodos method
 $("#addTask").click(function (e) {
     e.preventDefault();
-    var product = {
+    var task = {
         title: $("#title").val(),
         description: $("#description").val(),
         reminder: $("#time").val(),
         completed: false
     };
-    console.log(product)
-    if (product.title === "" || product.description === "" || product.reminder === "") {
+    console.log(task)
+    if (task.title === "" || task.description === "" || task.reminder === "") {
         console.log("If ran")
-        if (product.title === "") {
+        if (task.title === "" && task.description === "" && task.reminder === ""){
             $(".error1").show("slow")
-        } else if (product.description === "") {
             $(".error2").show("slow")
-        } else {
+            $(".error3").show("slow")
+        }else if (task.title === "") {
+            $(".error1").show("slow")
+            $(".error2").hide("slow")
+            $(".error3").hide("slow")
+        } else if (task.description === "") {
+            $(".error1").hide("slow")
+            $(".error2").show("slow")
+            $(".error3").hide("slow")
+        } else if (task.reminder === "") {
+            $(".error1").hide("slow")
+            $(".error2").hide("slow")
             $(".error3").show("slow")
         }
     } else {
@@ -209,7 +226,7 @@ $("#addTask").click(function (e) {
         $(".error2").hide()
         $(".error3").hide()
         console.log("Else ran")
-        app.sendTodos(url, product)
+        app.sendTodos(url, task)
     }
 }).css({
     width: '50%',
@@ -225,7 +242,7 @@ function del(id) {
 function checkBoxClick(id) {
     const final = url + id
     $.get({
-        url: url + id,
+        url: final,
         success: function (data) {
             data.completed ? app.falseValue(final) : app.trueValue(final)
         }
@@ -249,6 +266,7 @@ function pendingDiv() {
                             </div>    
                             </div>
                             `
+        
         $(".pendingtask").append(card)
     })
 }
@@ -271,4 +289,5 @@ function completedDiv() {
                     `
         $(".completedtask").append(card)
     })
+    
 }

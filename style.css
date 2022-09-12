@@ -117,15 +117,20 @@ input::placeholder{
     cursor: pointer;
     font-family: 'Heebo', sans-serif;
 }
-/* .list{
-    animation: anim .5s ease;
-} */
+.div1,.div2{
+    animation: anim 800ms ease;
+}
 
 @keyframes anim {
     0%{
-        transform: translateY(50%);
+        opacity: 0;
+        transform: translateX(50%);
+    }
+    50%{
+        opacity: 0.5;
     }
     100%{
-        transform: translateY(0);
+        opacity: 1;
+        transform: translateX(0);
     }
 }
