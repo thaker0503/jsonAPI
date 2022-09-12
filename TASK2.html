@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta name="google-signin-client_id" content="667455719843-jdhiicd35fh1agi99g3r5h0d9svms308.apps.googleusercontent.com">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,11 +24,19 @@
         integrity="sha512-HHsOC+h3najWR7OKiGZtfhFIEzg5VRIPde0kB0bG2QRidTQqf+sbfcxCTB16AcFB93xMjnBIKE29/MjdzXE+qw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
-    <script src="todo.js" defer></script>
+    <script src="todo.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
 <body>
-    <h1>Todo List</h1>
+    <div class="navbar">
+        <h1>Todo List</h1>
+        <div class="loggedInUser" id="loggedInUser">
+            <p>User</p>
+        </div>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="#" onclick="signOut();">Sign out</a>
+    </div>
     <div class="leftDiv">
         <form>
             <div class="input-fields">

@@ -1,6 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
     background-color: floralwhite;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2D6EFD;
+    padding: 10px 20px;
+    color: white;
+}
+.search-bar{
+    display: flex;
 }
 .leftDiv{
     height: 230px;
