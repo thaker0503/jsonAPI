@@ -15,11 +15,9 @@ body {
     padding: 10px 20px;
     color: white;
 }
-.search-bar{
-    display: flex;
-}
 .leftDiv{
     height: 230px;
+    margin: 10px;
 }
 form {
     width: 100%;
@@ -27,6 +25,7 @@ form {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    margin: 10px;
 }
 
 .input-fields {
@@ -67,7 +66,9 @@ input::placeholder{
     border: none;
     border-radius: 5px;
 }
-
+.pendingtask,.completedtask,.pending,.completed{
+    margin: 10px;
+}
 .div1,
 .div2 {
     width: 80%;
