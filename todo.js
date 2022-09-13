@@ -273,6 +273,9 @@ function pendingDiv() {
             }
         $(".pendingtask").append(card)
     })
+    // $(".div1").last().css({
+    //     animation: "anim 800ms ease"
+    // })
     
 }
 
@@ -310,6 +313,9 @@ function completedDiv() {
         
         $(".completedtask").append(card)
     })
+    // $(".div2").first().css({
+    //     animation: "anim 800ms ease"
+    // })
     
 }
 
