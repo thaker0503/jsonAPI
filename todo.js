@@ -13,8 +13,8 @@ var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
 var hh = today.getHours() < 12 ? "0" + today.getHours() : today.getHours()
-var mm = today.getMinutes() < 12 ? "0" + today.getMinutes() : today.getMinutes()
-var time = hh + ":" + mm
+var mmm = today.getMinutes() < 12 ? "0" + today.getMinutes() : today.getMinutes()
+var time = hh + ":" + mmm
 today = dd + '/' + mm + '/' + yyyy
 
 // hiding the error message that is to be shown when user tries to submit empty task
@@ -312,4 +312,5 @@ function completedDiv() {
     })
     
 }
+
 

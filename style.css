@@ -148,6 +148,10 @@ input::placeholder{
     /* border: 1px solid; */
     /* color: #fff; */
 }
+.div1:hover,.div2:hover{
+    background-color: #d7d7d745;
+    /* cursor: pointer; */
+}
 
 .div1 div,
 .div2 div {
