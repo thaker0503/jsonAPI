@@ -53,16 +53,15 @@
         <form>
             <div class="outerDiv">
                 <div class="upper">
-                    <div class="error1 alert">Title cannot be empty</div>
+                    <div class="error1 alert">* Title cannot be empty</div>
                     <input type="text" placeholder="Add task" id="title">
                 </div>
                 <div class="upper">
-                    <div class="error2 alert">Description cannot be empty</div>
+                    <div class="error2 alert">* Description cannot be empty</div>
                     <input type="text" placeholder="Add task description" id="description">
                 </div>
                 <div class="lower">
-                    <div class="error3 alert">Reminder cannot be empty</div>
-                    <input type="time" class="time-pickable" id="time">
+                    <span data-time="Remind Me" id="dataTime"><input type="time" class="time-pickable" id="time" /></span>
                     <button id="addTask">Add</button>
                 </div>
             </div>

@@ -10,6 +10,7 @@ body {
     background-color: floralwhite;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
 .navbar{
     display: flex;
     align-items: center;
@@ -37,6 +38,18 @@ form {
     border-radius: 2px;
     box-shadow: 0px 0.3px 0.9px rgba(0, 0, 0, 0.1), 0px 1.6px 3.6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    position: relative;
+}
+.alert{
+    color: red;
+}
+.error1{
+    position: absolute;
+    top: 0;
+}
+.error2{
+    position: absolute;
+    top: 28%;
 }
 .upper{
     width: 100%;
@@ -89,14 +102,13 @@ form {
 }
 
 
-
-.input-fields input,.time-pickable {
+.time-pickable {
     width: 80%;
     margin-right: 20px;
-    padding: 10px;
-    border: 1px solid;
-    background-color: #2C78D7;
-    color: white;
+    padding: 5px 10px;
+    border: 1px solid #e1dfdd;
+    background-color: #fff;
+    color: #2C78D7;
     font-size: 14px;
     border-radius: 4px;
     outline: none;
@@ -125,14 +137,15 @@ input::placeholder{
 .div1,
 .div2 {
     width: 80%;
-    background-color: #d7d7d799;
+    background-color: #fff;
     display: flex;
     align-items: center;
     gap: 30px;
     margin-top: 20px;
     padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid;
+    border-radius: 3px;
+    box-shadow: 0px 0.3px 0.9px rgba(0, 0, 0, 0.1), 0px 1.6px 3.6px rgba(0, 0, 0, 0.1);
+    /* border: 1px solid; */
     /* color: #fff; */
 }
 
@@ -162,23 +175,42 @@ input::placeholder{
     border: none;
     outline: none;
     border-radius: 4px;
-
-
-
-
 }
 .time-pickable{
     width: 100px;
+    border: none;
+    background-color: transparent;
+    /* margin-left: 0; */
 }
-.time-picker {
+/* input[type=time]::-webkit-datetime-edit-hour-field,input[type=time]::-webkit-datetime-edit-minute-field,input[type=time]::-webkit-datetime-edit-text{
+    display: none;
+} */
+input[type="time"]::-webkit-calendar-picker-indicator{
+    font-size: 24px;
+    cursor: pointer; 
+}
+#dataTime:hover::before{
+    display: block;
+}
+#dataTime{
+    position: relative;
+}
+#dataTime::before{
+    content: attr(data-time);
+    width: fit-content;
     position: absolute;
-    display: inline-block;
-    padding: 10px;
-    background: #2D6EFD;
-    border-radius: 6px;
+    top: 6px;
+    right: -50px;
+    background-color: #fff;
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 2px;
+    box-shadow: 0px 0.3px 0.9px rgba(0, 0, 0, 0.1), 0px 1.6px 3.6px rgba(0, 0, 0, 0.1);
+    display: none;
+    transition: all 1s ease-in-out;
 }
 
-.time-picker__select {
+/* .time-picker__select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -190,7 +222,7 @@ input::placeholder{
     background: #ffffff;
     cursor: pointer;
     font-family: 'Heebo', sans-serif;
-}
+} */
 
 .animation1{
     animation: anim 800ms ease;

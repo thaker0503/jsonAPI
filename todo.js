@@ -203,30 +203,18 @@ $("#addTask").click(function (e) {
         completed: false
     };
     console.log(task)
-    if (task.title === "" || task.description === "" || task.reminder === "") {
-        console.log("If ran")
-        if (task.title === "" && task.description === "" && task.reminder === ""){
-            $(".error1").show("slow")
-            $(".error2").show("slow")
-            $(".error3").show("slow")
-        }else if (task.title === "") {
-            $(".error1").show("slow")
-            $(".error2").hide("slow")
-            $(".error3").hide("slow")
-        } else if (task.description === "") {
-            $(".error1").hide("slow")
-            $(".error2").show("slow")
-            $(".error3").hide("slow")
-        } else if (task.reminder === "") {
-            $(".error1").hide("slow")
-            $(".error2").hide("slow")
-            $(".error3").show("slow")
-        }
-    } else {
+    if (task.title === "" && task.description === "") {
+        $(".error1").show()
+        $(".error2").show()
+    } else if (task.title === "") {
+        $(".error1").show()
+        $(".error2").hide()
+    } else if (task.description === "") {
+        $(".error2").show()
+        $(".error1").hide()
+    }else {
         $(".error1").hide()
         $(".error2").hide()
-        $(".error3").hide()
-        console.log("Else ran")
         app.sendTodos(url, task)
     }
 }).css({
@@ -255,6 +243,7 @@ function checkBoxClick(id) {
 function pendingDiv() {
     $(".pendingtask").empty()
     pending.forEach((item) => {
+        if (item.reminder === "") {
             var card = `<div class='list ${item.id}' > 
                             <div class="div1 ">
                                 <input type="checkbox"  id="checkBox" onclick="checkBoxClick('${item.id}')"/> 
@@ -262,13 +251,26 @@ function pendingDiv() {
                                     <span class="title">${item.title}</span> 
                                     <span class="desc">${item.description}</span> 
                                 </div>
-
+                                <span>Created on: ${today}</span>
+                                <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')" ><i  class="fa-solid fa-trash-can close"></i></button>
+                            </div>    
+                            </div>
+                            `   
+        } else {
+            var card = `<div class='list ${item.id}' > 
+                            <div class="div1 ">
+                                <input type="checkbox"  id="checkBox" onclick="checkBoxClick('${item.id}')"/> 
+                                <div>
+                                    <span class="title">${item.title}</span> 
+                                    <span class="desc">${item.description}</span> 
+                                </div>
                                 <span>Reminder at: ${item.reminder}</span>
                                 <span>Created on: ${today}</span>
                                 <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')" ><i  class="fa-solid fa-trash-can close"></i></button>
                             </div>    
                             </div>
-                            `    
+                            `   
+            }
         $(".pendingtask").append(card)
     })
     
@@ -277,7 +279,21 @@ function pendingDiv() {
 function completedDiv() {
     $(".completedtask").empty()
     completed.forEach((item) => {
-        const card = `<div class='list ' > 
+        if (item.reminder === "") {
+            var card = `<div class='list ' > 
+                        <div class="div2 ${item.id}">
+                            <input type="checkbox"   id="checkBox" onclick="checkBoxClick('${item.id}')" checked/> 
+                            <div>
+                            <span class="title">${item.title}</span> 
+                            <span class="desc">${item.description}</span> 
+                            </div>
+                            <span>Created on: ${today}</span>
+                            <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')" ><i  class="fa-solid fa-trash-can close"></i></button>
+                        </div>    
+                        </div>
+                    `
+        } else {
+            var card = `<div class='list ' > 
                         <div class="div2 ${item.id}">
                             <input type="checkbox"   id="checkBox" onclick="checkBoxClick('${item.id}')" checked/> 
                             <div>
@@ -290,6 +306,8 @@ function completedDiv() {
                         </div>    
                         </div>
                     `
+        }
+        
         $(".completedtask").append(card)
     })
     
