@@ -76,7 +76,14 @@ $("#signUpBtn").click(function (e) {
     e.preventDefault();
 })
 
+$(".container").css({
+    display: "none"
+})
+
 $("#btn").click(function () {
+    $(".container").css({
+        display: "flex"
+    })
     $("<form id='signIn'></form >").appendTo(".rightDiv")
     $("#signIn").html(`
                 <img src="../images/calendar.jpg" />
@@ -84,10 +91,10 @@ $("#btn").click(function () {
                 <input type="text" id="loginEmail" placeholder="Enter registered email" />
                 <input type="password" id="loginPassword" placeholder="Enter your password"/>
                 <button id="signInBtn">Sign In</button>
-                `).css({
-                    opacity: 1,
-                    WebkitTransition: 'opacity 1s ease-in-out',
-                    transition: 'opacity 1s ease-in-out'
+                `).animate({
+                    opacity: 1
+                    // WebkitTransition: 'opacity 10s ease-in-out',
+                    // transition: 'opacity 10s ease-in-out'
     })
 })
     
