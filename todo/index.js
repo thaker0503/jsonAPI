@@ -97,13 +97,47 @@ class Todo {
         })
     }
 
-    openNav() {
+    static openNav() {
         document.getElementById("myNav").style.height = "100%";
     }
 
-    closeNav() {
+    static closeNav() {
         document.getElementById("myNav").style.height = "0%";
     }
+
+    addForm(formType) {
+        $(".overlay-content").empty()
+        if (formType === "signIn") {
+            $(".overlay-content").append(`
+             <form class="signIn">
+                <div class="a1">
+                    <img src="../images/calendar.jpg" />
+                    <h1>Hello Again</h1>
+                </div>
+                <input type="text" id="loginEmail" placeholder="Enter registered email" />
+                <input type="password" id="loginPassword" placeholder="Enter your password" />
+                <button id="signInBtn">Sign In</button>
+                <p>Not yet registered ? <span class="link" id="signUpShow">Sign Up</span></p>
+            </form>
+        `)
+        } else {
+            $(".overlay-content").append(`
+             <form class="signUp">
+                <div class="a1">
+                    <img src="../images/calendar.jpg" />
+                    <h1>Welcome</h1>
+                </div>
+                <input type="text" id="userName" placeholder="Enter your name" />
+                <input type="text" id="regEmail" placeholder="Enter your email" />
+                <input type="password" id="regPassword" placeholder="Enter your password" />
+                <input type="password" id="regPasswordValid" placeholder="Re-enter your password" />
+                <button id="signUpBtn">Sign Up</button>
+            </form>
+        `)
+
+        }
+    }
+
 }
 
 const todo = new Todo(url)

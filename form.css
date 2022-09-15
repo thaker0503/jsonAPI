@@ -1,0 +1,67 @@
+body{
+    background-color: #686262;
+}
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: -30px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    height: 60vh;
+}
+
+.overlay-content img {
+    width: 100px;
+}
+
+.overlay-content form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.a1 {
+    width: 55%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.overlay-content form input {
+    padding: 16px 14px;
+    color: #000;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+
+.overlay-content form input::placeholder {
+    color: #2664CF;
+}
+
+.overlay-content form input:focus::placeholder {
+    color: #000;
+
+}
+
+.overlay-content form button {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: medium;
+    background-color: #2664CF;
+    color: white;
+}
+
+.overlay-content form .link {
+    color: #2664CF;
+    font-size: medium;
+    text-decoration: underline;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}

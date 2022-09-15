@@ -27,8 +27,8 @@
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
-    <script type="module" src="todo.js" async defer></script>
-    <script type="module" src="login.js" async defer></script>
+    <script src="todo.js" defer></script>
+    <!-- <script type="module" src="login.js" async defer></script> -->
 </head>
 
 <body>
@@ -38,83 +38,83 @@
             
         </div>
     </div>
-    <div id="afterLogin">
-        <div class="navbar">
-            <p>To Do</p>
-            <div class="g-signin2"></div>
-            <div class="loggedInUser" id="loggedInUser">
-            </div>
-        </div>
-        <div class="leftDiv">
-            <form>
-                <div class="outerDiv">
-                    <div class="upper">
-                        <div class="error1 alert">* Title cannot be empty</div>
-                        <input type="text" placeholder="Add task" id="title">
-                    </div>
-                    <div class="upper">
-                        <div class="error2 alert">* Description cannot be empty</div>
-                        <input type="text" placeholder="Add task description" id="description">
-                    </div>
-                    <div class="lower">
-                        <span data-time="Remind Me" id="dataTime"><input type="time" class="time-pickable" id="time" /></span>
-                        <button id="addTask">Add</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div id="container">
-            <ul id="todos">
-                <div class="pending">
-                    <h2>Pending Tasks</h2>
-                    <div class="pendingtask"></div>
-                </div>
-                <div class="completed">
-                    <h2>Completed Tasks</h2>
-                    <div class="completedtask"></div>
-                </div>
-            </ul>
-        
-            <!-- <div id="todoList">
-                            <ul id="todo">
-                                <li><a href="#yesterday">Yesterday</a></li>
-                                <li><a href="#today">Today</a></li>
-                                <li><a href="#tomorrow">Tomorrow</a></li>
-                            </ul>
-                            <ol id="yesterday">
-                                <ul id="todos">
-                                    <div class="pending">
-                                        <h2>Pending Tasks</h2>
-                                    </div>
-                                    <div class="completed">
-                                        <h2>Completed Tasks</h2>
-                                    </div>
-                                </ul>
-                            </ol>
-                            <ol id="today">
-                                <ul id="todos">
-                                    <div class="pending">
-                                        <h2>Pending Tasks</h2>
-                                    </div>
-                                    <div class="completed">
-                                        <h2>Completed Tasks</h2>
-                                    </div>
-                                </ul>
-                            </ol>
-                            <ol id="tomorrow">
-                                <ul id="todos">
-                                    <div class="pending">
-                                        <h2>Pending Tasks</h2>
-                                    </div>
-                                    <div class="completed">
-                                        <h2>Completed Tasks</h2>
-                                    </div>
-                                </ul>
-                            </ol>
-                        </div> -->
-        
+    <div class="navbar">
+        <p>To Do</p>
+        <div class="g-signin2"></div>
+        <div class="loggedInUser" id="loggedInUser">
+            Yatharth
         </div>
     </div>
+    <div class="leftDiv">
+        <form>
+            <div class="outerDiv">
+                <div class="upper">
+                    <div class="error1 alert">* Title cannot be empty</div>
+                    <input type="text" placeholder="Add task" id="title">
+                </div>
+                <div class="upper">
+                    <div class="error2 alert">* Description cannot be empty</div>
+                    <input type="text" placeholder="Add task description" id="description">
+                </div>
+                <div class="lower">
+                    <span data-time="Remind Me" id="dataTime"><input type="time" class="time-pickable" id="time" /></span>
+                    <button id="addTask">Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="container">
+        <ul id="todos">
+            <div class="pending">
+                <h2>Pending Tasks</h2>
+                <div class="pendingtask"></div>
+            </div>
+            <div class="completed">
+                <h2>Completed Tasks</h2>
+                <div class="completedtask"></div>
+            </div>
+        </ul>
+    
+        <!-- <div id="todoList">
+                        <ul id="todo">
+                            <li><a href="#yesterday">Yesterday</a></li>
+                            <li><a href="#today">Today</a></li>
+                            <li><a href="#tomorrow">Tomorrow</a></li>
+                        </ul>
+                        <ol id="yesterday">
+                            <ul id="todos">
+                                <div class="pending">
+                                    <h2>Pending Tasks</h2>
+                                </div>
+                                <div class="completed">
+                                    <h2>Completed Tasks</h2>
+                                </div>
+                            </ul>
+                        </ol>
+                        <ol id="today">
+                            <ul id="todos">
+                                <div class="pending">
+                                    <h2>Pending Tasks</h2>
+                                </div>
+                                <div class="completed">
+                                    <h2>Completed Tasks</h2>
+                                </div>
+                            </ul>
+                        </ol>
+                        <ol id="tomorrow">
+                            <ul id="todos">
+                                <div class="pending">
+                                    <h2>Pending Tasks</h2>
+                                </div>
+                                <div class="completed">
+                                    <h2>Completed Tasks</h2>
+                                </div>
+                            </ul>
+                        </ol>
+                    </div> -->
+    
+    </div>
+    
 
 
 

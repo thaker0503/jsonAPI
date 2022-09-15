@@ -1,9 +1,7 @@
-// url of the API
-import * as ns from './login.js';
 
-let currentUser = "";
-const url = `https://internapp.vercel.app/${ns.currentUser}/todos/`
-const user = "https://internapp.vercel.app/users/"
+let currentUser = "yatharth";
+const url = `https://internapp.vercel.app/${currentUser}/todos/`
+
 
 Notification.requestPermission()
 
@@ -27,8 +25,10 @@ $(".error1").hide()
 $(".error2").hide()
 $(".error3").hide()
 
+
+
 // creating class App that is to be instantiated to manipulate the application
-export class App {
+class App {
     // creating constructor for the App class
     constructor(url) {
         $.get(url, function (data) {
@@ -192,88 +192,13 @@ export class App {
             });
         }
     }
-
-    static openNav() {
-        document.getElementById("myNav").style.height = "100%";
-    }
-
-    static closeNav() {
-        document.getElementById("myNav").style.height = "0%";
-    }
-
-    addForm(formType) {
-        $(".overlay-content").empty()
-        if (formType === "signIn") {
-            $(".overlay-content").append(`
-             <form class="signIn">
-                <div class="a1">
-                    <img src="../images/calendar.jpg" />
-                    <h1>Hello Again</h1>
-                </div>
-                <input type="text" id="loginEmail" placeholder="Enter registered email" />
-                <input type="password" id="loginPassword" placeholder="Enter your password" />
-                <button id="signInBtn">Sign In</button>
-                <p>Not yet registered ? <span class="link" id="signUpShow">Sign Up</span></p>
-            </form>
-        `)
-        } else {
-            $(".overlay-content").append(`
-             <form class="signUp">
-                <div class="a1">
-                    <img src="../images/calendar.jpg" />
-                    <h1>Welcome</h1>
-                </div>
-                <input type="text" id="userName" placeholder="Enter your name" />
-                <input type="text" id="regEmail" placeholder="Enter your email" />
-                <input type="password" id="regPassword" placeholder="Enter your password" />
-                <input type="password" id="regPasswordValid" placeholder="Re-enter your password" />
-                <button id="signUpBtn">Sign Up</button>
-            </form>
-        `)
-            
-        }
-    }
-
     
 }
 
 
 // instatiating the App class
 const app = new App(url)
-const login = new ns.Users(user)
-App.openNav()
-app.addForm("signIn")
-$("#afterLogin").hide()
-// $("#signInShow").click(function () {
-//     app.addForm("signIn")
-// })
 
-$("#signUpShow").click(function () {
-    app.addForm("signUp")
-})
-
-$("#signInBtn").click(function (e) {
-    e.preventDefault()
-    const email = $("#loginEmail").val()
-    const password = $("#loginPassword").val()
-    login.signIn(email, password)
-    console.log(ns.currentUser)
-    currentUser = ns.currentUser
-    console.log(currentUser)
-    App.closeNav()
-    
-})
-
-$("#signUpBtn").click(function (e) {
-    e.preventDefault();
-    const name = $("#userName").val();
-    const email = $("#regEmail").val();
-    const password = $("#regPassword").val();
-    const pass = $("#regPasswordValid").val();
-    if (login.isPassSame(pass, password)) {
-        login.signUp(name, email, password)
-    }
-})
 
 
 // creating event listener on click and calling the sendtodos method
@@ -305,10 +230,12 @@ $("#addTask").click(function (e) {
     cursor: 'pointer'
 })
 
+
 // function to call the delTodo() method of the App class
 function del(id) {
     app.delTodo(id)
 }
+
 
 // function to call the falseValue() or trueValue() method of the App class
 function checkBoxClick(id) {
@@ -316,18 +243,17 @@ function checkBoxClick(id) {
     $.get({
         url: final,
         success: function (data) {
-            data.completed ? app.falseValue(final,id) : app.trueValue(final,id)
+            data.completed ? app.falseValue(final, id) : app.trueValue(final, id)
         }
     })
 }
-
 
 
 function pendingDiv() {
     $(".pendingtask").empty()
     pending.forEach((item) => {
         if (item.reminder === "") {
-            var card = `<div class='list ${item.id}' > 
+            var card = `<div class='list ' > 
                             <div class="div1 ">
                                 <input type="checkbox"  id="checkBox" onclick="checkBoxClick('${item.id}')"/> 
                                 <div>
@@ -340,25 +266,24 @@ function pendingDiv() {
                             </div>
                             `   
         } else {
-            var card = `<div class='list ${item.id}' > 
+            var card = `<div class='list ' > 
                             <div class="div1 ">
-                                <input type="checkbox"  id="checkBox" onclick="checkBoxClick('${item.id}')"/> 
+                                <input type="checkbox"  id="checkBox" data-id='${item.id}'/> 
                                 <div>
                                     <span class="title">${item.title}</span> 
                                     <span class="desc">${item.description}</span> 
                                 </div>
                                 <span>Reminder at: ${item.reminder}</span>
                                 <span>Created on: ${today}</span>
-                                <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')" ><i  class="fa-solid fa-trash-can close"></i></button>
+                                <button id="${item.id}" class='deleteBtn' onclick="del('${item.id}')"><i  class="fa-solid fa-trash-can close"></i></button>
                             </div>    
                             </div>
-                            `   
-            }
+                            `  
+            card.classList.add('list', 'new-list');
+        }
+        
         $(".pendingtask").append(card)
     })
-    // $(".div1").last().css({
-    //     animation: "anim 800ms ease"
-    // })
     
 }
 
@@ -367,7 +292,7 @@ function completedDiv() {
     completed.forEach((item) => {
         if (item.reminder === "") {
             var card = `<div class='list ' > 
-                        <div class="div2 ${item.id}">
+                        <div class="div2 ">
                             <input type="checkbox"   id="checkBox" onclick="checkBoxClick('${item.id}')" checked/> 
                             <div>
                             <span class="title">${item.title}</span> 
@@ -380,7 +305,7 @@ function completedDiv() {
                     `
         } else {
             var card = `<div class='list ' > 
-                        <div class="div2 ${item.id}">
+                        <div class="div2 ">
                             <input type="checkbox"   id="checkBox" onclick="checkBoxClick('${item.id}')" checked/> 
                             <div>
                             <span class="title">${item.title}</span> 
@@ -393,13 +318,8 @@ function completedDiv() {
                         </div>
                     `
         }
-        
         $(".completedtask").append(card)
     })
-    // $(".div2").first().css({
-    //     animation: "anim 800ms ease"
-    // })
-    
 }
 
 $(".closebtn").click(function () {

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do App | Form</title>
+    <link rel="stylesheet" href="form.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="./form.js" defer></script>
+</head>
+<body>
+    <div class="overlay-content">
+        <form class="signIn">
+            <div class="a1">
+                <img src="../images/calendar.jpg" />
+                <h1>Hello Again</h1>
+            </div>
+            <input type="text" id="loginEmail" placeholder="Enter registered email" />
+            <input type="password" id="loginPassword" placeholder="Enter your password" />
+            <button id="signInBtn">Sign In</button>
+            <p>Not yet registered ? <span class="link" id="signUpShow">Sign Up</span></p>
+        </form>
+        <form class="signUp">
+            <div class="a1">
+                <img src="../images/calendar.jpg" />
+                <h1>Welcome</h1>
+            </div>
+            <input type="text" id="userName" placeholder="Enter your name" />
+            <input type="text" id="regEmail" placeholder="Enter your email" />
+            <input type="password" id="regPassword" placeholder="Enter your password" />
+            <input type="password" id="regPasswordValid" placeholder="Re-enter your password" />
+            <button id="signUpBtn">Sign Up</button>
+        </form>
+    </div>
+    
+</body>
+</html>

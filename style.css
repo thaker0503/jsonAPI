@@ -329,8 +329,8 @@ input[type="time"]::-webkit-calendar-picker-indicator{
     font-size: 60px;
 }
 
-.animation2{
-    animation: anim2 800ms ease;
+.new-list{
+    animation: anim 800ms ease;
 }
 
 
