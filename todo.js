@@ -279,7 +279,7 @@ function pendingDiv() {
                             </div>    
                             </div>
                             `  
-            card.classList.add('list', 'new-list');
+            // card.classList.add('list', 'new-list');
         }
         
         $(".pendingtask").append(card)
