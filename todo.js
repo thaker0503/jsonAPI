@@ -1,6 +1,6 @@
 
 // let currentUser = "yatharth";
-const url = "http://localhost:3001/"
+const url = "https://internapp.vercel.app/yatharth/todos/"
 
 
 Notification.requestPermission()
@@ -53,8 +53,10 @@ class App {
                         })
                     }
                 })
-                pendingDiv()
-                completedDiv()
+                // console.log(pending)
+                // console.log(completed)
+                pendingDiv(pending)
+                completedDiv(completed)
             }
         })  
         
@@ -86,8 +88,8 @@ class App {
                         })
                     }
                 })
-                pendingDiv()
-                completedDiv()
+                pendingDiv(pending)
+                completedDiv(completed)
             }
         })  
         
@@ -100,11 +102,14 @@ class App {
             type: "POST",
             data: JSON.stringify(product),
             contentType: "application/json",
-            success: function () {
+            success: function (data) {
                 $("#title").val("").focus()
                 $("#description").val("")
                 $("#time").val("")
-                app.getTodos(url)
+                // app.getTodos(url)
+                pending = [...pending, data]
+                pendingDiv(pending)
+                completedDiv(completed)
             }
         });
     }
@@ -115,10 +120,15 @@ class App {
         $.ajax({
             url: final,
             type: 'DELETE',
-            success: function () {
-                app.getTodos(url)
-                pendingDiv()
-                completedDiv()
+            success: function (data) {
+                // app.getTodos(url)
+                const index = pending.findIndex(item => item.id == data.id)
+                pending.splice(index, 1)
+                const index2 = completed.findIndex(item => item.id == data.id)
+                completed.splice(index2, 1)
+                // pending = [...pending,data]
+                pendingDiv(pending)
+                completedDiv(completed)
             }
         })
     }
@@ -133,8 +143,16 @@ class App {
                 completed: false
             }),
             success:
-                function () {
-                    app.getTodos(url)
+                function (data) {
+                    // app.getTodos(url)
+                    const index = completed.findIndex(item => item == data)
+                    completed.splice(index, 1)
+                    completed = [...completed]
+                    pending = [...pending, data]
+                    console.log("False ==> Pending ==>",pending)
+                    console.log("False ==> Completed ==>",completed)
+                    pendingDiv(pending)
+                    completedDiv(completed)
                     // $(`.${id}`).addClass("animation")
                 }
         })
@@ -150,8 +168,16 @@ class App {
                 completed: true
             }),
             success:
-                function () {
-                    app.getTodos(url)
+                function (data) {
+                    // app.getTodos(url)
+                    const index = pending.findIndex(item => item == data)
+                    pending.splice(index, 1)
+                    pending = [...pending]
+                    completed = [...completed, data]
+                    console.log("True ==> Pending ==>", pending)
+                    console.log("True ==> Completed ==>", completed)
+                    completedDiv(completed)
+                    pendingDiv(pending)
                     // $(`.${id}`).addClass("animation")
                 }
         })
@@ -250,7 +276,7 @@ function checkBoxClick(id) {
 }
 
 
-function pendingDiv() {
+function pendingDiv(pending) {
     $(".pendingtask").empty()
     pending.forEach((item) => {
         if (item.reminder === "") {
@@ -288,7 +314,7 @@ function pendingDiv() {
     
 }
 
-function completedDiv() {
+function completedDiv(completed) {
     $(".completedtask").empty()
     completed.forEach((item) => {
         if (item.reminder === "") {
