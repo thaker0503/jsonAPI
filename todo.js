@@ -1,6 +1,6 @@
 
-let currentUser = "yatharth";
-const url = `https://internapp.vercel.app/${currentUser}/todos/`
+// let currentUser = "yatharth";
+const url = "http://localhost:3001/"
 
 
 Notification.requestPermission()
@@ -225,6 +225,7 @@ $("#addTask").click(function (e) {
         $(".error2").hide()
         app.sendTodos(url, task)
     }
+    // app.sendTodos(url, task)
 }).css({
     width: '50%',
     cursor: 'pointer'
